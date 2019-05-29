@@ -1,0 +1,41 @@
+﻿
+<div class="login-box">
+    <div class="login-logo">
+        <a href="../../index2.html"></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <h2 class="login-box-msg"><b>Đăng ký</b></h2>
+        <h4>Đăng ký dưới vai trò:</h4>
+        <input class="exercise" type="radio" name="add" value="teacher" checked> Giáo viên<br>
+        <input class="exercise" type="radio" name="add" value="student"> Học sinh<br>
+        <br />
+        <form class="login-form" role="form" >
+            <div class="form-group has-feedback">
+                <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Nhập tên đăng nhập" ng-model="signupData.userName" id="username" required autofocus oninvalid="this.setCustomValidity('Tài khoản không được để trống')" oninput="this.setCustomValidity('')" />
+            </div>
+            <div class="form-group has-feedback">
+                <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Nhập mật khẩu đăng nhập" ng-model="signupData.password" id="password" required oninvalid="this.setCustomValidity('Mật khẩu không được để trống')" oninput="this.setCustomValidity('')" />
+            </div>
+            <div class="form-group has-feedback">
+                <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Nhập lại mật khẩu đăng nhập" ng-model="signupData.password2" id="password" required oninvalid="this.setCustomValidity('Mật khẩu không được để trống')" oninput="this.setCustomValidity('')" />
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <!--<button ui-sref="clickSignup({clickItem: item})" ng-click="signUp()" class="btn btn-primary btn-block btn-flat">Đăng ký</button>-->
+
+                    <button ng-click="signUp()" class="btn btn-primary btn-block btn-flat">Đăng ký</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+    </div>
+    <!-- /.social-auth-links -->
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+<!-- jQuery 3 -->

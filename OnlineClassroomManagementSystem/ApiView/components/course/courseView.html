@@ -1,0 +1,83 @@
+﻿
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- /.box -->
+            <div class="box">
+                <div class="box-header">
+                    <h1 style="text-align:center;font-weight:700">Quản lý khóa học</h1>
+
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th ng-click="orderByMe('CourseName')">Tên khóa học</th>
+                                <th ng-click="orderByMe('Description')">Mô tả khóa học</th>
+                                <th ng-click="orderByMe('NumOfStudent')">Số lượng học sinh</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    <input class="form-control w3-input" placeholder="Nhập tên khóa học" style="width:100%!important" ng-model="addModal.CourseName" >
+                                </td>
+
+                                <td>
+                                    <input class="form-control w3-input" placeholder="Nhập mô tả khóa học" style="width:100%!important" ng-model="addModal.Description" >
+                                </td>
+
+
+                                <td>
+                                    <input class="form-control w3-input" type="number" placeholder="Nhập số lượng học sinh" style="width:100%!important" ng-model="addModal.NumOfStudent" >
+                                </td>
+
+                                <td style="text-align:center">
+                                    <button class="btn btn-sm btn-circle btn-success" ng-click="addCourse()"><i class="fa fa-plus"></i> </button>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in curDataFilter | filter:addModal | orderBy:myOrderBy track by $index"  on-finish-render="initDataTable()">
+                                <td>
+                                    <div ng-hide="editItem[$index]"><a ui-sref="clickCourse({courseID:item.CourseID, courseName:item.CourseName,clickItem: item})">{{item.CourseName}}</a></div>
+                                    <div ng-show="editItem[$index]"><input type="text" style="width:100%!important" ng-model="item.CourseName" /></div>
+                                </td>
+                                <td>
+                                    <div ng-hide="editItem[$index]">{{item.Description}}</div>
+                                    <div ng-show="editItem[$index]"><input type="text" style="width:100%!important" ng-model="item.Description" /></div>
+                                </td>
+                                <td>
+                                    <div ng-hide="editItem[$index]">{{item.NumOfStudent}}</div>
+                                    <div ng-show="editItem[$index]"><input type="number" ng-model="item.NumOfStudent" /></div>
+                                </td>
+                                <td style="text-align:center">
+                                    <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="editCourse($index)"><i class="fa fa-pencil"></i> </button>
+                                    <button ng-show="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="updateCourse($index,item)">OK </button>
+                                    <button class="btn btn-sm btn-circle btn-danger" ng-click="removeCourse($index)"><i class="fa fa-trash"></i> </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Tên Khóa học</th>
+                                <th>Mô tả khóa học</th>
+                                <th>Số lượng học sinh</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+
+

@@ -1,0 +1,312 @@
+﻿<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- /.box -->
+            <div class="box">
+                <div class="box-header">
+                    <h2 id="title" style="font-weight:500;text-align:center">Quản lý chi tiết khóa học</h2>
+                </div>
+                <div class="box-body">
+                    <div id="exTab3">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a data-target="#CourseSkill" data-toggle="tab">Kĩ năng</a>
+                            </li>
+                            <li>
+                                <a data-target="#CourseTeacher" data-toggle="tab">Giáo viên</a>
+                            </li>
+                            <li>
+                                <a data-target="#CourseClass" data-toggle="tab">Lớp học</a>
+                            </li>
+                            <li>
+                                <a data-target="#CourseExercise" data-toggle="tab">Bài tập</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="CourseSkill">
+                                <h4>Xem theo:</h4>
+                                <input class="skill" type="radio" name="skill" value="added" checked> Đã thêm vào khóa học<br>
+                                <input class="skill" type="radio" name="skill" value="not_added"> Chưa thêm vào khóa học<br>
+                                <br />
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th ng-click="orderByMe('SkillName')">Tên kĩ năng</th>
+                                            <th ng-click="orderByMe('Description')">Mô tả kĩ năng</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập tên kĩ năng" style="width:100%!important" ng-model="addModal.SkillName">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập mô tả kĩ năng" style="width:100%!important" ng-model="addModal.Description">
+                                            </td>
+
+                                            <td style="width:10%;text-align:center"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in skillData | filter:addModal | orderBy:myOrderBy track by $index">
+
+                                            <td>
+                                                <div>{{item.SkillName}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.Description}}</div>
+                                            </td>
+                                            <td style="width:10%;text-align:center">
+                                                <!--<div ng-hide="isAdded"><input type="checkbox" id="cbClicked" /></div>
+                                <div ng-show="isAdded"><input type="checkbox" id="cbClicked" checked /></div>-->
+
+                                                <button ng-hide="isAddedSkill" class="btn btn-sm btn-circle btn-success" ng-click="addSkill($index)"><i class="fa fa-plus"></i> </button>
+                                                <button ng-show="isAddedSkill" class="btn btn-sm btn-circle btn-danger" ng-click="removeSkill($index)"><i class="fa fa-trash"></i> </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Tên kĩ năng</th>
+                                            <th>Mô tả kĩ năng</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="CourseExercise">
+
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th ng-click="orderByMe('ExerciseName')">Tên bài tập</th>
+                                            <th ng-click="orderByMe('Description')">Mô tả bài tập</th>
+                                            <th ng-click="orderByMe('ExerciseTime')">Thời gian làm bài</th>
+                                            <th ng-click="orderByMe('ExerciseScore')">Điểm số</th>
+                                            <th ng-click="orderByMe('ExercisePath')">Đường dẫn</th>
+                                            <th ng-click="orderByMe('Note')">Ghi chú</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập tên bài tập" style="width:100%!important" ng-model="addModal.ExerciseName">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập mô tả bài tập" style="width:100%!important" ng-model="addModal.Description">
+                                            </td>
+
+
+                                            <td>
+                                                <input class="form-control w3-input"  type="number" placeholder="Nhập thời gian làm bài" style="width:100%!important" ng-model="addModal.ExerciseTime">
+                                            </td>
+
+
+                                            <td>
+                                                <input class="form-control w3-input"  type="number" placeholder="Nhập điểm số" style="width:100%!important" ng-model="addModal.ExerciseScore">
+                                            </td>
+
+
+                                            <td>
+                                                <input class="form-control w3-input"  type="file" placeholder="Nhập đường dẫn" style="width:100%!important" ng-model="addModal.ExercisePath">
+                                            </td>
+
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập ghi chú" style="width:100%!important" ng-model="addModal.Note">
+                                            </td>
+
+                                            <td style="width:10%;text-align:center">
+                                                <button class="btn btn-sm btn-circle btn-success" ng-click="addExercise()"><i class="fa fa-plus"></i> </button>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="item in exerciseData | filter:addModal | orderBy:myOrderBy track by $index">
+
+                                        <td>
+                                            <div ng-hide="editItem[$index]"><a ui-sref="clickExercise({exerciseID:item.ExerciseID, clickItem: item})">{{item.ExerciseName}}</a></div>
+                                            <div ng-show="editItem[$index]"><input style="width:100%!important" type="text" ng-model="item.ExerciseName" /></div>
+                                        </td>
+                                        <td>
+                                            <div ng-hide="editItem[$index]">{{item.Description}}</div>
+                                            <div ng-show="editItem[$index]"><input style="width:100%!important" type="text" ng-model="item.Description" /></div>
+                                        </td>
+                                        <td>
+                                            <div ng-hide="editItem[$index]">{{item.ExerciseTime}}</div>
+                                            <div ng-show="editItem[$index]"><input style="width:100%!important" type="number" ng-model="item.ExerciseTime" /></div>
+                                        </td>
+                                        <td>
+                                            <div ng-hide="editItem[$index]">{{item.ExerciseScore}}</div>
+                                            <div ng-show="editItem[$index]"><input style="width:100%!important" type="number" ng-model="item.ExerciseScore" /></div>
+                                        </td>
+                                        <td>
+                                            <div ng-hide="editItem[$index]">{{item.ExercisePath}}</div>
+                                            <div ng-show="editItem[$index]"><input style="width:100%!important" type="text" ng-model="item.ExercisePath" /></div>
+                                        </td>
+                                        <td>
+                                            <div ng-hide="editItem[$index]">{{item.Note}}</div>
+                                            <div ng-show="editItem[$index]"><input style="width:100%!important" type="text" ng-model="item.Note" /></div>
+                                        </td>
+                                        <td style="width:10%;text-align:center">
+                                            <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="editExercise($index)"><i class="fa fa-pencil"></i> </button>
+                                            <button ng-show="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="updateExercise($index,item)">OK </button>
+                                            <button class="btn btn-sm btn-circle btn-danger" ng-click="removeExercise($index)"><i class="fa fa-trash"></i> </button>
+                                        </td>
+                                    </tr>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Tên bài tập</th>
+                                            <th>Mô tả bài tập</th>
+                                            <th>Thời gian làm bài</th>
+                                            <th>Điểm số</th>
+                                            <th>Đường dẫn</th>
+                                            <th>Ghi chú</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="CourseTeacher">
+                                <h4>Xem theo:</h4>
+                                <input class="teacher" type="radio" name="add" value="added"> Đã thêm vào khóa học<br>
+                                <input class="teacher" type="radio" name="add" value="not_added"> Chưa thêm vào khóa học<br>
+                                <br />
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Họ tên</th>
+                                            <th>Địa chỉ</th>
+                                            <th>Ngày sinh</th>
+                                            <th>Email</th>
+                                            <th>Tên đăng nhập</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập họ tên" style="width:100%!important" ng-model="addModal.FullName">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập địa chỉ" style="width:100%!important" ng-model="addModal.Address">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập ngày sinh" style="width:100%!important" ng-model="addModal.BirthDay">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập email" style="width:100%!important" ng-model="addModal.Email">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập vai trò" style="width:100%!important" ng-model="addModal.Role">
+                                            </td>
+
+                                            <!--<td style="width:10%;text-align:center">
+                                <button ng-click="addExercise()" class="btn btn-sm btn-circle btn-success"><i class="fa fa-plus"></i> </button>
+                            </td>-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in teacherData track by $index">
+
+                                            <td>
+                                                <div>{{item.FullName}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.Address}}</div>
+                                            <td>
+                                                <div>{{item.BirthDay}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.Email}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.Role}}</div>
+                                            </td>
+                                            <td style="width:10%;text-align:center">
+                                                <div ng-hide="isAddedTeacher"><input id="cbTeacher" type="checkbox" ng-click="cbTeacherClicked($index)" /></div>
+                                                <div ng-show="isAddedTeacher"><input id="cbTeacher" type="checkbox" ng-click="cbTeacherClicked($index)" checked /></div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Họ tên</th>
+                                            <th>Địa chỉ</th>
+                                            <th>Ngày sinh</th>
+                                            <th>Email</th>
+                                            <th>Vai trò</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="CourseClass">
+
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th ng-click="orderByMe('ClassName')">Tên lớp</th>
+                                            <th ng-click="orderByMe('NumOfStudent')">Số lượng học sinh</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập tên lớp" style="width:100%!important" ng-model="addModal.ClassName">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" type="number" placeholder="Nhập số lượng học sinh" style="width:100%!important" ng-model="addModal.NumOfStudent">
+                                            </td>
+                                            <td style="width:10%;text-align:center">
+                                                <button class="btn btn-sm btn-circle btn-success" ng-click="addClass()"><i class="fa fa-plus"></i> </button>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in classData | filter:addModal | orderBy:myOrderBy track by $index">
+
+                                            <td>
+                                                <div ng-hide="ClassItem[$index]"><a ui-sref="clickClass({classID:item.ClassID,className:item.ClassName, clickItem: item})">{{item.ClassName}}</a></div>
+                                                <div ng-show="ClassItem[$index]"><input style="width:100%!important" type="text" ng-model="item.ClassName" /></div>
+                                            </td>
+                                            <td>
+                                                <div ng-hide="ClassItem[$index]">{{item.NumOfStudent}}</div>
+                                                <div ng-show="ClassItem[$index]"><input style="width:100%!important" type="number" ng-model="item.NumOfStudent" /></div>
+                                            </td>
+                                            <td style="width:10%;text-align:center">
+                                                <button ng-hide="ClassItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="editClass($index)"><i class="fa fa-pencil"></i> </button>
+                                                <button ng-show="ClassItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="updateClass($index,item)">OK </button>
+                                                <button class="btn btn-sm btn-circle btn-danger" ng-click="removeClass($index)"><i class="fa fa-trash"></i> </button>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Tên lớp</th>
+                                            <th>Số lượng học sinh</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->

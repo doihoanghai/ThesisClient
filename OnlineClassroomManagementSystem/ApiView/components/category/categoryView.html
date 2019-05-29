@@ -1,0 +1,217 @@
+﻿<!-- Main content -->
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Button used to open the contact form - fixed at the bottom of the page */
+    .open-button {
+        background-color: #555;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        opacity: 0.8;
+    }
+
+    /* The popup form - hidden by default */
+    .form-popup {
+        margin-left:500px;
+        max-width: 600px;
+        display: none;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+    }
+
+    /* Add styles to the form container */
+    .form-container {
+        max-width: 300px;
+        background-color:white;
+    }
+
+        /* Full-width input fields */
+        .form-container textarea[type=text], .form-container input[type=text] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            background: #f1f1f1;
+        }
+
+            /* When the inputs get focus, do something */
+            .form-container textarea[type=text]:focus, .form-container input[type=text]:focus {
+                background-color: #ddd;
+                outline: none;
+            }
+
+        /* Set a style for the submit/login button */
+        .form-container .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        /* Add a red background color to the cancel button */
+        .form-container .cancel {
+            background-color: red;
+        }
+
+        /* Add some hover effects to buttons */
+        .form-container .btn:hover, .open-button:hover {
+            opacity: 1;
+        }
+</style>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- /.box -->
+            <div class="box">
+                <div class="box-header">
+                    <h1 style="text-align:center;font-weight:700">Quản lý hạng mục</h1>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm hạng mục</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label"><b>Tên hạng mục</b></label>
+                                            <input type="text" placeholder="Nhập tên hạng mục" ng-model="addModal.CategoryName" class="form-control" id="recipient-name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message-text" class="col-form-label"><b>Mô tả hạng mục</b></label>
+                                            <textarea type="text" placeholder="Nhập mô tả hạng mục" ng-model="addModal.Description" class="form-control" id="message-text"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button ng-click="addCategory()" class="btn" data-dismiss="modal">Thêm</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Cập nhật hạng mục</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label"><b>Tên hạng mục</b></label>
+                                            <input type="text" placeholder="Nhập tên hạng mục" ng-model="updateModal.CategoryName" class="form-control" id="recipient-name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message-text" class="col-form-label"><b>Mô tả hạng mục</b></label>
+                                            <textarea type="text" placeholder="Nhập mô tả hạng mục" ng-model="updateModal.Description" class="form-control" id="message-text"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button ng-click="updateCategory(updateModal)" class="btn" data-dismiss="modal">Cập nhật</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+
+                            <tr>
+                                <th ng-click="orderByMe('CategoryName')">Tên hạng mục</th>
+                                <th ng-click="orderByMe('Description')">Mô tả hạng mục</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    <input class="form-control w3-input" placeholder="Nhập tên hạng mục" style="width:100%!important" ng-model="filterModal.CategoryName">
+                                </td>
+
+                                <td>
+                                    <input class="form-control w3-input" placeholder="Nhập mô tả hạng mục" style="width:100%!important" ng-model="filterModal.Description">
+                                </td>
+
+                                <td style="width:10%;text-align:center">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="addModal"> Thêm</button>
+                                </td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat="item in curDataFilter | filter:filterModal | orderBy:myOrderBy track by $index" on-finish-render="initDataTable()">
+                                <td>
+                                    <div ng-hide="editItem[$index]"><a ui-sref="clickCategory({categoryID:item.CategoryID,categoryName:item.CategoryName, clickItem: item})">{{item.CategoryName}}</a></div>
+                                    <div ng-show="editItem[$index]"><input style="width:100%!important;" type="text" ng-model="item.CategoryName" /></div>
+                                </td>
+                                <td>
+                                    <div ng-hide="editItem[$index]">{{item.Description}}</div>
+                                    <div ng-show="editItem[$index]"><input style="width:100%!important;" type="text" ng-model="item.Description" /></div>
+                                </td>
+                                <td style="text-align:center">
+
+                                    <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" data-toggle="modal" data-target="#editModal"  ng-click="editCategory($index, item)"><i class="fa fa-pencil"></i> </button>                                    <button ng-show="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="updateCategory($index,item)">OK </button>
+                                    <button class="btn btn-sm btn-circle btn-danger" ng-click="removeCategory($index)"><i class="fa fa-trash"></i> </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Tên hạng mục</th>
+                                <th>Mô tả hạng mục</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+
+<script>
+    function openAddForm() {
+        document.getElementById("addForm").style.display = "inline-block";
+        document.getElementById("example1").style.display = "none";
+    }
+
+    function closeAddForm() {
+        document.getElementById("addForm").style.display = "none";
+        document.getElementById("example1").style.display = "table";
+    }
+
+    function closeEditForm() {
+        document.getElementById("editForm").style.display = "none";
+        document.getElementById("example1").style.display = "table";
+        window.location.reload();
+    }
+</script>
+

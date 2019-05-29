@@ -1,0 +1,207 @@
+﻿<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- /.box -->
+            <div class="box">
+                <div class="box-header">
+                    <h2 id="title" style="font-weight:500;text-align:center">Quản lý chi tiết lớp học</h2>
+                </div>
+                <div class="box-body">
+                    <div id="exTab3">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a data-target="#ClassTeacher" data-toggle="tab">Giáo viên</a>
+                            </li>
+                            <li>
+                                <a data-target="#ClassStudent" data-toggle="tab">Học sinh</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="ClassTeacher">
+                                <h4>Xem theo:</h4>
+                                <input class="teacher" type="radio" name="add" value="added" checked> Đã thêm vào khóa học<br>
+                                <input class="teacher" type="radio" name="add" value="not_added"> Chưa thêm vào khóa học<br>
+                                <br />
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th ng-click="orderByMe('TeacherFullName')">Họ tên</th>
+                                            <th ng-click="orderByMe('TeacherAddress')">Địa chỉ</th>
+                                            <th ng-click="orderByMe('TeacherBirthday')">Ngày sinh</th>
+                                            <th ng-click="orderByMe('TeacherEmail')">Email</th>
+                                            <th ng-click="orderByMe('TeacherPhoneNumber')">Số điện thoại</th>
+                                            <th ng-click="orderByMe('TeacherUserName')">Tên đăng nhập</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập họ tên " style="width:100%!important" ng-model="addModal.TeacherFullName">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập địa chỉ " style="width:100%!important" ng-model="addModal.TeacherAddress">
+                                            </td>
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập ngày sinh" style="width:100%!important" ng-model="addModal.TeacherBirthday">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập email" style="width:100%!important" ng-model="addModal.TeacherEmail">
+                                            </td>
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập số điện thoại" style="width:100%!important" ng-model="addModal.TeacherPhoneNumber">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập tên đăng nhập" style="width:100%!important" ng-model="addModal.TeacherUserName">
+                                            </td>
+
+                                            <td style="width:10%;text-align:center">
+                                            </td>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in teacherData | filter:addModal | orderBy:myOrderBy track by $index">
+
+                                            <td>
+                                                <div>{{item.FullName}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.Address}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.BirthDay}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.Email}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.PhoneNumber}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.UserName}}</div>
+                                            </td>
+                                            <td style="width:10%;text-align:center">
+                                                <!--<div ng-hide="isAdded"><input type="checkbox" id="cbClicked" /></div>
+                    <div ng-show="isAdded"><input type="checkbox" id="cbClicked" checked /></div>-->
+
+                                                <button ng-hide="isAddedTeacher " class="btn btn-sm btn-circle btn-success" ng-click="addTeacher($index)"><i class="fa fa-plus"></i> </button>
+                                                <button ng-show="isAddedTeacher " class="btn btn-sm btn-circle btn-danger" ng-click="removeTeacher($index)"><i class="fa fa-trash"></i> </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th ng-click="orderByMe('TeacherFullName')">Họ tên</th>
+                                            <th ng-click="orderByMe('TeacherAddress')">Địa chỉ</th>
+                                            <th ng-click="orderByMe('TeacherBirthday')">Ngày sinh</th>
+                                            <th ng-click="orderByMe('TeacherEmail')">Email</th>
+                                            <th ng-click="orderByMe('TeacherPhoneNumber')">Số điện thoại</th>
+                                            <th ng-click="orderByMe('TeacherUserName')">Tên đăng nhập</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="ClassStudent">
+                                <h4>Xem theo:</h4>
+                                <input class="student" type="radio" name="add" value="added" checked> Đã thêm vào khóa học<br>
+                                <input class="student" type="radio" name="add" value="not_added"> Chưa thêm vào khóa học<br>
+                                <br />
+
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th ng-click="orderByMe('StudentFullName')">Họ tên</th>
+                                            <th ng-click="orderByMe('StudentAddress')">Địa chỉ</th>
+                                            <th ng-click="orderByMe('StudentBirthday')">Ngày sinh</th>
+                                            <th ng-click="orderByMe('StudentEmail')">Email</th>
+                                            <th ng-click="orderByMe('StudentPhoneNumber')">Số điện thoại</th>
+                                            <th ng-click="orderByMe('StudentUserName')">Tên đăng nhập</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập họ tên " style="width:100%!important" ng-model="addModal.StudentFullName">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập địa chỉ " style="width:100%!important" ng-model="addModal.StudentAddress">
+                                            </td>
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập ngày sinh" style="width:100%!important" ng-model="addModal.StudentBirthday">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập email" style="width:100%!important" ng-model="addModal.StudentEmail">
+                                            </td>
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập số điện thoại" style="width:100%!important" ng-model="addModal.StudentPhoneNumber">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập tên đăng nhập" style="width:100%!important" ng-model="addModal.StudentUsername">
+                                            </td>
+
+                                            <td style="width:10%;text-align:center"></td>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in studentData | filter:addModal | orderBy:myOrderBy track by $index">
+
+                                            <td>
+                                                <div>{{item.FullName}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.Address}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.BirthDay}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.Email}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.PhoneNumber}}</div>
+                                            </td>
+                                            <td>
+                                                <div>{{item.UserName}}</div>
+                                            </td>
+                                            <td style="width:10%;text-align:center">
+                                                <!--<div ng-hide="isAdded"><input type="checkbox" id="cbClicked" /></div>
+                    <div ng-show="isAdded"><input type="checkbox" id="cbClicked" checked /></div>-->
+
+                                                <button ng-hide="isAddedStudent" class="btn btn-sm btn-circle btn-success" ng-click="addStudent($index)"><i class="fa fa-plus"></i> </button>
+                                                <button ng-show="isAddedStudent" class="btn btn-sm btn-circle btn-danger" ng-click="removeStudent($index)"><i class="fa fa-trash"></i> </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th ng-click="orderByMe('StudentFullName')">Họ tên</th>
+                                            <th ng-click="orderByMe('StudentAddress')">Địa chỉ</th>
+                                            <th ng-click="orderByMe('StudentBirthday')">Ngày sinh</th>
+                                            <th ng-click="orderByMe('StudentEmail')">Email</th>
+                                            <th ng-click="orderByMe('StudentPhoneNumber')">Số điện thoại</th>
+                                            <th ng-click="orderByMe('StudentUserName')">Tên đăng nhập</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->

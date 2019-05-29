@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <style>
+        .force-scroll {
+            overflow-y: scroll;
+            height: 300px;
+        }
+        .notification {
+            display: inline-block;
+            position: relative;
+            padding: 0.6em;
+            background: #3498db;
+            border-radius: 0.2em;
+            font-size: 1.3em;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+            .notification::before,
+            .notification::after {
+                color: #fff;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            }
+
+            .notification::before {
+                display: block;
+                content: "\f0f3";
+                font-family: "FontAwesome";
+                transform-origin: top center;
+            }
+
+            .notification .badge {
+                position: absolute;
+                top: -10px;
+                right: -10px;
+                padding: 5px 10px;
+                border-radius: 50%;
+                background-color: red;
+                color: white;
+            }
+    </style>
+</head>
+<body>
+
+    <div style="background-color:#222d32">
+        <br />
+        <h4 style="text-align:left;color:#e9ebee;font-weight:700;margin-left:10px">
+            <br /><a href="http://localhost:2697/#!/admin"> HTQL LỚP HỌC TRỰC TUYẾN </a>
+            <button style="float:right;margin-right:10px;margin-bottom:10px" onclick="myFunction()" class="notification"><span class="badge">3</span></button><br /><br /><br />
+        </h4>
+        <div style="float:right">
+
+            <!--<div id="Demo" class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+        <a href="#" class="w3-bar-item w3-button">Hải đã nộp bài</a>
+        <a href="#" class="w3-bar-item w3-button">Bài tập của bạn đã được chấm xong</a>
+        <a href="#" class="w3-bar-item w3-button">Thông báo nghỉ lễ 30/4 -1/5</a>
+    </div>-->
+            <ul id="Demo" class="w3-dropdown-content w3-bar-block w3-border force-scroll" style="right:0">
+                <li href="#" class="w3-bar-item w3-button">
+                    <b style="font-size:16px">Hải đã nộp bài</b>
+                    <p style="font-size:13px">Vừa xong</p>
+                    <hr>
+                </li>
+                <li href="#" class="w3-bar-item w3-button">
+                    <b style="font-size:16px">Bài tập của bạn đã được chấm xong</b>
+                    <p style="font-size:13px">1 phút trước</p>
+                    <hr>
+                </li>
+                <li href="#" class="w3-bar-item w3-button">
+                    <b style="font-size:16px">Thông báo nghỉ lễ 30/4 -1/5</b>
+                    <p style="font-size:13px">5 ngày trước</p>
+                    <hr>
+                </li>
+                <li href="#" class="w3-bar-item w3-button">
+                    Khoa đã yêu cầu tham gia lớp học.
+                    <hr>
+                </li>
+                <li href="#" class="w3-bar-item w3-button">
+                    Yêu cầu tham gia của bạn được chấp nhận.
+                    <hr>
+                </li>
+                <li href="#" class="w3-bar-item w3-button">
+                    Thông báo kiểm tra giữa HK1 18-19.
+                    <hr>
+                </li>
+            </ul>
+            <script>
+                function myFunction() {
+                    var x = document.getElementById("Demo");
+                    if (x.className.indexOf("w3-show") == -1) {
+                        x.className += " w3-show";
+                    } else {
+                        x.className = x.className.replace(" w3-show", "");
+                    }
+                }
+            </script>
+            <br />
+        </div>
+
+    </div>
+
+    <!--<ul>
+        <li><a href="http://localhost:2697/#!/category"><i class="fa fa-angle-right"></i> Hạng mục </a></li>
+        <li><a href="http://localhost:2697/#!/course"><i class="fa fa-angle-right"></i> Khóa học </a></li>
+        <li><a href="http://localhost:2697/#!/skill"><i class="fa fa-angle-right"></i> Kĩ năng </a></li>
+
+    </ul>-->
+
+    <div>
+
+        <!-- Main content -->
+        <section>
+            <!-- Main row -->
+            <div class="row">
+                <div ui-view id="ui-view"></div>
+            </div>
+            <!-- /.row (main row) -->
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+</body>
+</html>

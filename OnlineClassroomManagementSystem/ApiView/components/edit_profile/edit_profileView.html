@@ -1,0 +1,36 @@
+﻿
+<div class="login-box">
+    <div class="login-logo">
+        <a href="../../index2.html"></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <h2 class="login-box-msg"><b>Thay đổi mật khẩu</b></h2>
+
+        <form class="login-form" role="form">
+            <div class="form-group has-feedback">
+                <p>Mật khẩu hiện tại: </p><input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Nhập mật khẩu đăng nhập hiện tại" ng-model="profileData.password0" id="password" required oninvalid="this.setCustomValidity('Mật khẩu không được để trống')" oninput="this.setCustomValidity('')" />
+            </div>
+            <div class="form-group has-feedback">
+                <p>Mật khẩu mới: </p><input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Nhập mật khẩu đăng nhập mới" ng-model="profileData.password1" id="password" required oninvalid="this.setCustomValidity('Mật khẩu không được để trống')" oninput="this.setCustomValidity('')" />
+            </div>
+            <div class="form-group has-feedback">
+                <p>Xác nhận mật khẩu: </p><input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Nhập lại mật khẩu đăng nhập mới" ng-model="profileData.password2" id="password" required oninvalid="this.setCustomValidity('Mật khẩu không được để trống')" oninput="this.setCustomValidity('')" />
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button ng-click="updateProfile()" class="btn btn-primary btn-block btn-flat">Cập nhật</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+    </div>
+    <!-- /.social-auth-links -->
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+<!-- jQuery 3 -->
