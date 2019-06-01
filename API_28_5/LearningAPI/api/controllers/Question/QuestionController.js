@@ -28,7 +28,7 @@ module.exports = {
             .input('QuestionTime', sql.Int, req.body.QuestionTime)
             .input('AnswerID', sql.NChar, req.body.AnswerID)
             .input('Score', sql.Int, req.body.Score)
-            .query('UPDATE Course SET ExerciseID = @QuestionContent, QuestionContent = @QuestionContent, QuestionType = @QuestionType,QuestionTime = @QuestionTime,AnswerID = @AnswerID,Score = @Score WHERE QuestionID = @QuestionID', (err, result) => {
+            .query('UPDATE Question SET ExerciseID = @ExerciseID, QuestionContent = @QuestionContent, QuestionType = @QuestionType,QuestionTime = @QuestionTime,AnswerID = @AnswerID,Score = @Score WHERE QuestionID = @QuestionID', (err, result) => {
                 if (err)
                     console.log(err);
                 res.json({ message: 'Update success!' });

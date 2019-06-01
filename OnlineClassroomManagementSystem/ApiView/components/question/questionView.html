@@ -10,13 +10,17 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                     <select ng-change="val()" ng-model="CurQuestion" id="question" style="text-align:center;margin:5px;">
-                        <option value={{$index}} ng-repeat="item in curDataFilter track by $index" selected> Câu {{$index+1}} </option>
+                        <option value={{$index}} ng-repeat="question in curDataFilter track by $index"> Câu {{$index+1}} </option>
                     </select>
-                    <!-- EDIT BUTTON  -->
-                    <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" data-toggle="modal" data-target="#editModal" ng-click="editQuestion(qIndex)"><i class="fa fa-pencil"></i> </button>
                     <!-- SHOW BUTTON  -->
                     <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="showQuestion()"> Xem tất cả </button>
-                    <!-- EDIT MODAL  -->
+
+                    <!-- DELETE BUTTON  -->
+                    <button style="float:right;margin:2px" ng-show="showSingle == true" class="btn btn-sm btn-circle btn-danger" ng-click="removeQuestion(qIndex)"><i class="fa fa-trash"></i> </button>
+
+                    <!-- EDIT BUTTON  -->
+                    <button style="float:right;margin:2px" ng-show="showSingle == true" class="btn btn-sm btn-circle btn-success" data-toggle="modal" data-target="#editModal" ng-click="editQuestion(qIndex)"><i class="fa fa-pencil"></i> </button>
+                    <!-- EDIT QUESTION MODAL  -->
                     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -31,14 +35,15 @@
                                     <form>
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label"><b>Nội dung câu hỏi</b></label>
-                                            <textarea type="text" placeholder="Nhập nội dung câu hỏi" ng-model="updateModal.QuestionContent" class="form-control" id="recipient-name"></textarea>
+                                            <textarea type="text" placeholder="Nhập nội dung câu hỏi" ng-model="updateModal.QuestionContent" class="form-control"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label"><b>Loại câu hỏi</b></label>
-                                            <select id="questionType">
-                                                <option value="0">Chọn loại câu hỏi</option>
-                                                <option value="1">Trắc nghiệm</option>
-                                                <option value="2">Tự luận</option>
+                                            <select id="questionType" size="2" multiple>
+                                                <option ng-show="updateModal.QuestionType == 2" value="1">Trắc nghiệm</option>
+                                                <option ng-show="updateModal.QuestionType == 2" value="2" selected>Tự luận</option>
+                                                <option ng-show="updateModal.QuestionType == 1" value="1" selected>Trắc nghiệm</option>
+                                                <option ng-show="updateModal.QuestionType == 1" value="2">Tự luận</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -58,9 +63,39 @@
                             </div>
                         </div>
                     </div>
+                    <!-- EDIT ANSWER MODAL  -->
+                    <div class="modal fade" id="EditAnswerModal" tabindex="-1" role="dialog" aria-labelledby="answerModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Cập nhật câu trả lời</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
 
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label"><b>Nội dung câu hỏi</b></label>
+                                            <textarea type="text" placeholder="Nhập nội dung câu hỏi" ng-model="updateAnswer.AnswerContent" class="form-control"></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="message-text" class="col-form-label"><b>Đường dẫn</b></label>
+                                            <input style="float:right;" type="file" ng-model="updateAnswer.AnswerPath" class="form-control" id="message-text">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button ng-click="updateAnswer(updateAnswer, qIndex)" class="btn" data-dismiss="modal">Cập nhật</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- ADD BUTTON  -->
-                    <button style="float:right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="addModal"> Thêm</button>
+                    <button style="float:right;margin:2px" type="button" class="btn btn-sm btn-circle btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="addModal"><i class="fa fa-plus"></i></button>
                     <!-- ADD MODAL  -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -102,65 +137,74 @@
                             </div>
                         </div>
                     </div>
-                    <!-- ADD ANSWER  -->
-                    <div class="modal fade" id="answerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm câu trả lời</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="col-form-label"><b>Nội dung câu trả lời</b></label>
-                                            <textarea type="text" placeholder="Nhập nội dung câu hỏi" ng-model="addModal.AnswerContent" class="form-control" id="recipient-name"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="message-text" class="col-form-label"><b>Đường dẫn</b></label>
-                                            <input style="float:right;" type="file" ng-model="addModal.AnswerPath" class="form-control" id="message-text">
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button ng-click="addAnswer()" class="btn" data-dismiss="modal">Thêm</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     <br />
                     <!-- QUESTION DATA SINGLE -->
                     <div ng-show="showSingle == true">
                         <p style="float:left;width:30%;" ng-show="curDataFilter[CurQuestion].QuestionType == 1"><b>Loại câu hỏi : </b> Trắc nghiệm</p>
                         <p style="float:left;width:30%;" ng-show="curDataFilter[CurQuestion].QuestionType == 2"><b>Loại câu hỏi : </b> Tự luận</p>
-                        <p style="float:left;width:30%;"><b>Thời gian trả lời : </b> {{curDataFilter[CurQuestion].QuestionTime}}</p>
-                        <p style="float:left;width:30%;"><b>Điểm số : </b> {{curDataFilter[CurQuestion].Score}}</p>
-                        <p style="float:left;width:30%;"><b>Nội dung câu hỏi : </b> {{curDataFilter[CurQuestion].QuestionContent}}</p><br />
+                        <p style="float:left;width:30%;"><b>Thời gian trả lời : </b> {{question.QuestionTime}}</p>
+                        <p style="float:left;width:30%;"><b>Điểm số : </b> {{question.Score}}</p>
+                        <p style="float:left;width:30%;"><b>Nội dung câu hỏi : </b> {{question.QuestionContent}}</p><br />
+
 
                         <br />
                     </div>
                     <br />
-                    <div ng-show="showSingle == false" ng-model="cauhoi" ng-repeat="question in questionData track by $index" style=" border: 2px solid black;margin: auto;padding: 20px;text-align: left;">
-                        <!-- ANSWER BUTTON  -->
-                        <button ng-click="clickAnswer(question)" ng-show="curDataFilter[$index].QuestionType == 1" 
-                                style="float:right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#answerModal" 
+                    <!-- QUESTION DATA FULL -->
+                    <div ng-show="showSingle == false" ng-model="cauhoi" ng-repeat="question2 in questionData track by $index" style=" border: 2px solid black;margin: auto;padding: 20px;text-align: left;">
+                        <!-- ADD ANSWER BUTTON  -->
+                        <button ng-click="clickAnswer($index)" ng-show="question2.QuestionType == 1"
+                                style="float:right" type="button" class="btn btn-primary" data-toggle="modal" data-target="#answerModal"
                                 data-whatever="addModal">
-                        <i class="fa fa-plus"></i>
+                            <i class="fa fa-plus"></i>
                         </button>
+                        <!-- ADD ANSWER MODAL -->
+                        <div class="modal fade" id="answerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Thêm câu trả lời</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="col-form-label"><b>Nội dung câu trả lời</b></label>
+                                                <textarea type="text" placeholder="Nhập nội dung câu hỏi" ng-model="addModal.AnswerContent" class="form-control" id="recipient-name"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="message-text" class="col-form-label"><b>Đường dẫn</b></label>
+                                                <input style="float:right;" type="file" ng-model="addModal.AnswerPath" class="form-control" id="message-text">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button ng-click="addAnswer(qIndex)" class="btn" data-dismiss="modal">Thêm</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="box-body">
-                            <p style="float:left;width:30%;" ng-show="curDataFilter[$index].QuestionType == 1"><b>Loại câu hỏi : </b> Trắc nghiệm</p>
-                            <p style="float:left;width:30%;" ng-show="curDataFilter[$index].QuestionType == 2"><b>Loại câu hỏi : </b> Tự luận</p>
-                            <p style="float:left;width:30%;"><b>Thời gian trả lời : </b> {{curDataFilter[CurQuestion].QuestionTime}}</p>
-                            <p style="float:left;width:30%;"><b>Điểm số : </b> {{curDataFilter[CurQuestion].Score}}</p>
-                            <p style="float:left;width:30%;"><b>Nội dung câu hỏi {{$index +1}} : </b> {{question.QuestionContent}}</p><br />
+                            <p style="float:left;width:30%;" ng-show="question2.QuestionType == 1"><b>Loại câu hỏi : </b> Trắc nghiệm</p>
+                            <p style="float:left;width:30%;" ng-show="question2.QuestionType == 2"><b>Loại câu hỏi : </b> Tự luận</p>
+                            <p style="float:left;width:30%;"><b>Thời gian trả lời : </b> {{question2.QuestionTime}}</p>
+                            <p style="float:left;width:30%;"><b>Điểm số : </b> {{question2.Score}}</p>
+                            <p style="float:left;width:30%;"><b>Nội dung câu hỏi {{$index +1}} : </b> {{question2.QuestionContent}}</p><br />
 
                             <br />
                         </div>
-                        <div class="box-body" ng-repeat="answer in answerData2 track by $index " ng-if="answer.QuestionID==question.QuestionID">
-                            <input ng-change="chooseAnswer()" ng-model="ChoiceModal"class="dapan" type="radio" name="answer" value={{$index}}> {{answer.AnswerContent}}<br>
+                        <div class="box-body" ng-repeat="answer2 in answerData2 track by $index " ng-if="answer2.QuestionID==question2.QuestionID">
+                            <input ng-change="chooseAnswer(question2,answer2)" ng-model="ChoiceModal" class="dapan" type="radio" name="answer" value={{$index}}> {{answer2.AnswerContent}}
+                            <!-- DELETE BUTTON  -->
+                            <button style="float:right;margin:2px;" class="btn btn-sm btn-circle btn-danger" ng-click="removeAnswer(answer2)"><i class="fa fa-trash"></i> </button>
+
+                            <!-- EDIT BUTTON  -->
+                            <button style="float:right;margin:2px;" class="btn btn-sm btn-circle btn-success" data-toggle="modal" data-target="#EditAnswerModal" ng-click="editAnswer(answer2)"><i class="fa fa-pencil"></i> </button>
+
                         </div>
                         <br />
                     </div>
@@ -171,10 +215,16 @@
                     <div class="box-header" ng-show="curDataFilter[CurQuestion].QuestionType == 1">
                         <h2 style="text-align:center">Quản lý câu trả lời</h2>
                         <input type="text" placeholder="Nhập câu trả lời" ng-model="addModal.AnswerContent" class="form-control" style="float:left;width:89%;">
-                        <button style="float:right;width:10%;" type="button" class="btn btn-primary" ng-click="addAnswer()"> Thêm</button>
+                        <button style="float:right;width:10%;" type="button" class="btn btn-primary" ng-click="addAnswer(qIndex)"> Thêm</button>
                     </div>
-                    <div id="tracnghiem" class="box-header" ng-repeat="item in answerData track by $index">
-                        <input ng-change="chooseAnswer()" ng-model="ChoiceModal"class="dapan" type="radio" name="answer" value={{$index}}> {{item.AnswerContent}}<br>
+                    <div id="tracnghiem" class="box-header" ng-repeat="answer in answerData track by $index">
+                        <input style="float:left;" ng-change="chooseAnswer(curDataFilter[CurQuestion],answer)" ng-model="ChoiceModal" class="dapan" type="radio" name="answer" id="answer{{$index}}"> {{answer.AnswerContent}}
+                        <!-- DELETE BUTTON  -->
+                        <button style="float:right;margin:2px;" class="btn btn-sm btn-circle btn-danger" ng-click="removeAnswer(answer)"><i class="fa fa-trash"></i> </button>
+
+                        <!-- EDIT BUTTON  -->
+                        <button style="float:right;margin:2px;" class="btn btn-sm btn-circle btn-success" data-toggle="modal" data-target="#EditAnswerModal" ng-click="editAnswer(answer)"><i class="fa fa-pencil"></i> </button>
+                        
                     </div>
 
                 </div>
