@@ -15,7 +15,7 @@ module.exports = {
     update: (req, res) => {
         const request = new sql.Request()
             .input('AnswerID', sql.NVarChar, req.params.AnswerID)
-            .input('QuestionID', sql.NVarChar, req.params.AnswerID)
+            .input('QuestionID', sql.NVarChar, req.params.QuestionID)
             .input('AnswerContent', sql.NVarChar, req.body.AnswerContent)
             .input('AnswerPath', sql.NChar, req.body.AnswerPath)
             .query('UPDATE Answer SET AnswerContent = @AnswerContent, AnswerPath = @AnswerPath WHERE AnswerID = @AnswerID AND QuestionID = @QuestionID', (err, result) => {
