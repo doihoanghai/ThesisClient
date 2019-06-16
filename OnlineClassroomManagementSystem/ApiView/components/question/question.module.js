@@ -1,5 +1,6 @@
 ﻿(function () {
-    angular.module('ocms.question', ['ocms.common']).config(config);
+    angular.module('ocms.question', ['ocms.common'])
+        .config(config);
 
     config.$inject = ['$stateProvider', '$urlRouterProvider'];
 

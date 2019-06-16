@@ -18,7 +18,9 @@ module.exports = {
                     else {
                         if (bcrypt.compareSync(req.body.Password, result.recordset[0].PasswordHash))
                             res.json({
-                                token: jwt.sign({ _id: result.recordset[0].Id, FullName: result.recordset[0].FullName, UserName: result.recordset[0].UserName, UserLevel: result.recordset[0].UserLevel }, 'RESTFULAPIs')
+                                token: jwt.sign({ _id: result.recordset[0].Id, FullName: result.recordset[0].FullName, UserName: result.recordset[0].UserName, UserLevel: result.recordset[0].UserLevel }, 'RESTFULAPIs'),
+                                FullName: result.recordset[0].FullName,
+                                UserLevel: result.recordset[0].UserLevel
                             });
                         else
                             res.json({ message: 'Wrong User name or password ' });
@@ -48,7 +50,7 @@ module.exports = {
                                     res.status(501).json({ message: 'Internal Server Erro !' });
                                 }
                                 else {
-                                    res.json({ message: 'Sign up success !' });
+                                    res.end(JSON.stringify(result.recordset));
                                 }
                             });
                     }

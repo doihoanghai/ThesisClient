@@ -1,0 +1,60 @@
+﻿<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- /.box -->
+            <div class="box">
+                <div class="box-header">
+                    <h2 style="text-align:center">Lớp học</h2>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <div class="tab-pane" id="CourseClass">
+
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th ng-click="orderByMe('ClassName')">Tên lớp</th>
+                                    <th ng-click="orderByMe('NumOfStudent')">Số lượng học sinh</th>
+                                </tr>
+                                <tr>
+
+                                    <td>
+                                        <input class="form-control w3-input" placeholder="Nhập tên lớp" style="width:100%!important" ng-model="addModal.ClassName">
+                                    </td>
+
+                                    <td>
+                                        <input class="form-control w3-input" type="number" placeholder="Nhập số lượng học sinh" style="width:100%!important" ng-model="addModal.NumOfStudent">
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in curDataFilter| filter:addModal | orderBy:myOrderBy track by $index">
+
+                                    <td>
+                                        <div><a ui-sref="clickClassStudent({classID:item.ClassID,courseID:item.CourseID, clickItem: item})">{{item.ClassName}}</a></div>
+                                    </td>
+                                    <td>
+                                        <div >{{item.NumOfStudent}}</div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Tên lớp</th>
+                                    <th>Số lượng học sinh</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+        </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->

@@ -205,18 +205,22 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ApiView\components\category\categoryController.js" />
+    <Content Include="ApiView\components\category\category.module.js" />
+    <Content Include="ApiView\components\category\categoryView.html" />
     <Content Include="ApiView\components\class_detail\class_detail.module.js" />
     <Content Include="ApiView\components\class_detail\class_detailController.js" />
     <Content Include="ApiView\components\class_detail\class_detailView.html" />
+    <Content Include="ApiView\components\do_exercise\do_exercise.module.js" />
+    <Content Include="ApiView\components\do_exercise\do_exerciseController.js" />
+    <Content Include="ApiView\components\do_exercise\do_exerciseView.html" />
+    <Content Include="ApiView\components\do_exercise\do_exerciseView2.html" />
     <Content Include="ApiView\components\edit_profile\edit_profile.module.js" />
     <Content Include="ApiView\components\edit_profile\edit_profileController.js" />
     <Content Include="ApiView\components\edit_profile\edit_profileView.html" />
     <Content Include="ApiView\components\category_course\category_course.module.js" />
     <Content Include="ApiView\components\category_course\category_courseController.js" />
     <Content Include="ApiView\components\category_course\category_courseView.html" />
-    <Content Include="ApiView\components\category\category.module.js" />
-    <Content Include="ApiView\components\category\categoryController.js" />
-    <Content Include="ApiView\components\category\categoryView.html" />
     <Content Include="ApiView\components\course_detail\course_detail.module.js" />
     <Content Include="ApiView\components\course_detail\course_detailController.js" />
     <Content Include="ApiView\components\course_detail\course_detailView.html" />
@@ -239,6 +243,15 @@
     <Content Include="ApiView\components\login\loginController.js" />
     <Content Include="ApiView\components\login\loginView.html" />
     <Content Include="ApiView\components\student\studentView.html" />
+    <Content Include="ApiView\components\student_class\student_class.module.js" />
+    <Content Include="ApiView\components\student_class\student_classController.js" />
+    <Content Include="ApiView\components\student_class\student_classView.html" />
+    <Content Include="ApiView\components\student_exercise\student_exercise.module.js" />
+    <Content Include="ApiView\components\student_exercise\student_exerciseController.js" />
+    <Content Include="ApiView\components\student_exercise\student_exerciseView.html" />
+    <Content Include="ApiView\components\teacher\teacher.module.js" />
+    <Content Include="ApiView\components\teacher\teacherController.js" />
+    <Content Include="ApiView\components\teacher\teacherView.html" />
     <Content Include="ApiView\shared\app.js" />
     <Content Include="ApiView\shared\directives\pagerDirective.html" />
     <Content Include="ApiView\shared\directives\pagerDirective.js" />
@@ -643,9 +656,6 @@
     <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ApiView\components\student\do_exercise\" />
-    <Folder Include="ApiView\components\student\student_class\" />
-    <Folder Include="ApiView\components\student\student_exercise\" />
     <Folder Include="App_Data\" />
     <Folder Include="assets\bower_components\bootstrap-colorpicker\" />
     <Folder Include="assets\bower_components\bootstrap-datepicker\" />

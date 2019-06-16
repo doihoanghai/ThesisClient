@@ -12,7 +12,11 @@
             'ocms.question',
             'ocms.signup',
             'ocms.edit_profile',
-            'ocms.class_detail'
+            'ocms.class_detail',
+            'ocms.student_class', ,
+            'ocms.student_exercise',
+            'ocms.do_exercise',
+            'ocms.teacher'
         ]
         )
         .config(config)

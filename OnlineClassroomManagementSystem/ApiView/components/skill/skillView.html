@@ -10,6 +10,62 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm kĩ năng</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label"><b>Tên kĩ năng</b></label>
+                                            <input type="text" placeholder="Nhập tên hạng mục" ng-model="addModal.SkillName" class="form-control" id="recipient-name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message-text" class="col-form-label"><b>Mô tả hạng mục</b></label>
+                                            <textarea type="text" placeholder="Nhập mô tả hạng mục" ng-model="addModal.Description" class="form-control" id="message-text"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button ng-click="addSkill()" class="btn" data-dismiss="modal">Thêm</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Cập nhật kĩ năng</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label"><b>Tên kĩ năng</b></label>
+                                            <input type="text" placeholder="Nhập tên hạng mục" ng-model="updateModal.SkillName" class="form-control" id="recipient-name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message-text" class="col-form-label"><b>Mô tả hạng mục</b></label>
+                                            <textarea type="text" placeholder="Nhập mô tả hạng mục" ng-model="updateModal.Description" class="form-control" id="message-text"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button ng-click="updateSkill(item)" class="btn" data-dismiss="modal">Cập nhật</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -28,7 +84,7 @@
                                 </td>
 
                                 <td style="width:10%">
-                                    <button class="btn btn-sm btn-circle btn-success" ng-click="addSkill()"><i class="fa fa-plus"></i> </button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="addModal"> Thêm</button>
                                 </td>
                             </tr>
                         </thead>
@@ -44,8 +100,8 @@
                                 </td>
 
                                 <td style="text-align:center">
-                                    <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="editSkill($index)"><i class="fa fa-pencil"></i> </button>
-                                    <button ng-show="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="updateSkill($index,item)">OK</i> </button>
+                                    <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" data-toggle="modal" data-target="#editModal" ng-click="editSkill($index, item)"><i class="fa fa-pencil"></i> </button>
+                                    <button ng-show="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="updateSkill($index,item)">OK </button>
                                     <button class="btn btn-sm btn-circle btn-danger" ng-click="removeSkill($index)"><i class="fa fa-trash"></i> </button>
                                 </td>
                             </tr>

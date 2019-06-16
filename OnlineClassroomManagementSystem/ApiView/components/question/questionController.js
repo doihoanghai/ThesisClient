@@ -3,6 +3,32 @@
 
     questionController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService'];
 
+    app.directive('onFinishRender', ['$timeout', '$parse', function ($timeout, $parse) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attr) {
+                if (scope.$last === true) {
+                    $timeout(function () {
+                        scope.$emit('ngRepeatFinished');
+                        if (!!attr.onFinishRender) {
+                            $parse(attr.onFinishRender)(scope);
+                        }
+                    });
+                }
+
+                if (!!attr.onStartRender) {
+                    if (scope.$first === true) {
+                        $timeout(function () {
+                            scope.$emit('ngRepeatStarted');
+                            if (!!attr.onStartRender) {
+                                $parse(attr.onStartRender)(scope);
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    }]);
 
 
     function questionController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService) {
@@ -14,7 +40,7 @@
         $scope.questionData = {};
         $scope.answerData = {};
         $scope.answerData2 = {};
-        $scope.showSingle = true;
+        $scope.showSingle = false;
         //Question//
         ////ADD
         $scope.addQuestion = function () {
@@ -128,7 +154,8 @@
                 alert('Câu trả lời ' + answer.AnswerContent + ' đã được chọn là đáp án')
             }, function (erro) {
                 alert('Lỗi putAPI');
-            });
+                });
+
         }
         //DELETE
         $scope.removeQuestion = function (index) {
@@ -148,8 +175,10 @@
         //Answer//
         //Load Answer Each
         $scope.val = function () {
-            $scope.qIndex = document.getElementById("question").value;
-            $scope.showSingle = true;
+            if ($scope.qIndex = document.getElementById("question").value) {
+                $scope.showSingle = true;
+            }
+            getData();
             //GET ANSWER EACH
             $scope.answerData = [];
             apiService.get('Answer/' + $scope.curDataFilter[$scope.qIndex].QuestionID, null, function (result) {
@@ -159,46 +188,77 @@
                 });
                 for (var j = 0; j < $scope.answerData.length; j++) {
                     if ($scope.curDataFilter[$scope.qIndex].AnswerID == $scope.answerData[j].AnswerID) {
-                        var answerID = "answer" + j; 
-                        var ao=document.getElementById(answerID);
+                        var answerID = "answer" + j;
+                        var ao = document.getElementById(answerID);
                         $('#' + answerID).prop('checked', true);
-                        //var radioButton = document.getElementById(answerID);
-                        //radioButton.checked = true;
-                        }
                     }
-                
+                }
             }, function (erro) {
                 alert('Lỗi getAPI');
             });
+        }
+
+        $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
+            //you also get the actual event object
+            //do stuff, execute functions -- whatever...
+            for (var j = 0; j < $scope.answerData.length; j++) {
+                if ($scope.curDataFilter[$scope.qIndex].AnswerID == $scope.answerData[j].AnswerID) {
+                    var answerID = "answer" + j;
+                    var ao = document.getElementById(answerID);
+                    $('#' + answerID).prop('checked', true);
+                }
+            }
+        });
+
+        $scope.checkAnswer = function () {
+            
+            $scope.addedAnswer = [];
+            $scope.answerData.forEach(function (element) {
+                $scope.addedAnswer.push(element.AnswerContent.toLowerCase());
+            })
+
+            if ($scope.addedAnswer.indexOf($scope.addModal.AnswerContent.toLowerCase()) > -1) {
+                return false
+            }
+            return true;
         }
         ////ADD
         $scope.clickAnswer = function (index) {
             $scope.qIndex = index;
         }
         $scope.addAnswer = function (index) {
+
+            
             if (!$scope.addModal.AnswerContent) {
                 alert("Nội dung câu trả lời còn thiếu");
                 return
             }
-
-            var answer = {
-                "AnswerID": $scope.addModal.AnswerID,
-                "AnswerContent": $scope.addModal.AnswerContent,
-                "AnswerPath": '',
-                "QuestionID": $scope.curDataFilter[index].QuestionID
+            if (!$scope.checkAnswer()) {
+                alert("Nội dung câu trả lời trùng lặp");
+                $scope.addModal.AnswerContent = '';
+                return
             }
-
-            apiService.post('Answer/' + $scope.curDataFilter[index].QuestionID, answer, function (result) {
-                if ($scope.showSingle == true) {
-                    $scope.answerData.push(answer);
+            
+            if ($scope.addedAnswer.length>0) {
+                var answer = {
+                    "AnswerID": $scope.addModal.AnswerID,
+                    "AnswerContent": $scope.addModal.AnswerContent,
+                    "AnswerPath": '',
+                    "QuestionID": $scope.curDataFilter[index].QuestionID
                 }
-                $scope.answerData2.push(answer);
-                alert('Câu trả lời đã được thêm')
-                //clear search field
-                $scope.addModal.AnswerContent = null;
-            }, function (erro) {
-                alert('Lỗi postAPI');
-            });
+
+                apiService.post('Answer/' + $scope.curDataFilter[index].QuestionID, answer, function (result) {
+                    if ($scope.showSingle == true) {
+                        $scope.answerData.push(answer);
+                    }
+                    $scope.answerData2.push(answer);
+                    alert('Câu trả lời đã được thêm')
+                    //clear search field
+                    $scope.addModal.AnswerContent = null;
+                }, function (erro) {
+                    alert('Lỗi postAPI');
+                    });
+            }
         }
         ////EDIT
         $scope.editAnswer = function (item) {
@@ -216,7 +276,6 @@
             }
             apiService.put('Answer/' + item.QuestionID + '/' + item.AnswerID, answer, function (result) {
                 var edited = document.getElementById($scope.updateAnswer.AnswerID);
-                alert(edited.value);
                 edited.innerHTML = item.AnswerContent;
                 $("#" + $scope.updateAnswer.AnswerID).val(item.AnswerContent);
                 alert('Câu trả lời đã được cập nhật');
@@ -245,6 +304,7 @@
 
         $scope.showQuestion = function () {
             $scope.showSingle = false;
+            document.getElementById("question").value = 'Default';
         }
 
 
@@ -273,7 +333,7 @@
             });
         }
 
-        getData();;
+        getData();
 
     }
 })(angular.module('ocms.question'));

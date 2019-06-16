@@ -35,6 +35,11 @@
         var classID = $state.params.classID;// classID
         $scope.updateModel = {};
         $scope.addModal = {};
+        $scope.studentModal = {};
+        $scope.studentAddModal = {};
+        $scope.orderByMe = function (x) {
+            $scope.myOrderBy = x;
+        }
         ////TEACHER////
         $scope.isAddedTeacher = true;//each Teacher checbox value
         //pre-load added//
@@ -148,13 +153,13 @@
 
         //STUDENT
         //pre-load added//
-        apiService.get('Class_Student/' + classID, null, function (result) {
+        $scope.isAddedStudent = true;//get checked list
+        apiService.get('Class_Student/Class/' + classID, null, function (result) {
             $scope.studentData = [];
             $scope.addedStudentData = [];
             result.data[0].forEach(function (element) {
                 $scope.studentData.push(element);
                 $scope.addedStudentData.push(element);
-                alert($scope.addedStudentData[0].ID);
             });
         }, function (erro) {
             alert('Lỗi getAPI');
@@ -166,7 +171,7 @@
             var val = $('.student:checked').val();//view by
             if (val == 'added') {
                 $scope.isAddedStudent = true;//get checked list
-                apiService.get('Class_Student/' + classID, null, function (result) {
+                apiService.get('Class_Student/Class/' + classID, null, function (result) {
                     $scope.studentData = [];
                     if (result.data.length > 0) {
                         result.data[0].forEach(function (element) {
@@ -220,7 +225,7 @@
             }
 
             if (confirm("Bạn có muốn học sinh " + student.FullName + " vào lớp học " + $state.params.className + "?")) {
-                apiService.post('Class_Student/' + $state.params.classID, student, function (result) {
+                apiService.post('Class_Student/Class/' + $state.params.classID, student, function (result) {
                     alert("Học sinh " + student.FullName + "  đã được thêm vào lớp học " + $state.params.className);
                 },
                     function (erro) {
@@ -230,12 +235,60 @@
             //remove checked row from unchecked list
             $scope.studentData.splice(index, 1);
         }
+        //CREATE
+        $scope.createStudent = function (index) {
+            if (!$scope.studentModal.StudentFullName) {
+                alert('Họ tên học sinh còn thiếu');
+                return
+            }
+            if (!$scope.studentModal.StudentUsername) {
+                alert('Tên đăng nhập còn thiếu');
+                return
+            }
+            var student = {
 
+                "FullName": $scope.studentAddModal.StudentFullName,
+                "Address": $scope.studentAddModal.StudentAddress,
+                "BirthDay": $scope.studentAddModal.StudentBirthDay,
+                "Email": $scope.studentAddModal.StudentEmail,
+                "PhoneNumber": $scope.studentAddModal.StudentPhoneNumber,
+                "UserName": $scope.studentAddModal.StudentUsername,
+                "Password": '123456789',
+                "UserLevel":2
+            }
+
+            if (confirm("Bạn có muốn học sinh " + student.FullName + " vào lớp học " + $state.params.className + "?")) {
+                apiService.post('signup', student, function (result) {
+                    var create = {
+                        "ClassID": $state.params.classID,
+                        "StudentID": result.data[0].Id,
+                    }
+                    apiService.post('Class_Student/Class/' + $state.params.classID, create, function (result) {
+                        alert("Học sinh " + student.FullName + "  đã được thêm vào lớp học " + $state.params.className);
+                        $scope.studentAddModal.StudentFullName = '';
+                        $scope.studentAddModal.StudentAddress = '';
+                        $scope.studentAddModal.StudentBirthDay = '';
+                        $scope.studentAddModal.StudentEmail = '';
+                        $scope.studentAddModal.StudentPhoneNumber = '';
+                        $scope.studentAddModal.StudentUsername = '';
+                    },
+                        function (erro) {
+                            alert('Lỗi postAPI');
+                        });
+                },
+                    function (erro) {
+                        alert('Lỗi postAPI');
+                    });
+                
+            }
+            //remove checked row from unchecked list
+            $scope.studentData.splice(index, 1);
+        }
         //REMOVE
-        $scope.removeStudent = function (index) {
-            var name = $scope.studentData[index].FullName;
+        $scope.removeStudent = function (item) {
+            var name = item.FullName;
             if (confirm("Bạn có muốn xóa học sinh: " + name + " khỏi lớp học " + $state.params.className + "?")) {
-                apiService.del('Class_Student/' + classID + '/' + $scope.studentData[index].StudentID, null, function (result) {
+                apiService.del('Class_Student/' + classID + '/' + item.Id, null, function (result) {
                     alert("Học sinh " + name + "  đã được xóa khỏi lớp học " + $state.params.className);
 
                 }, function (erro) {

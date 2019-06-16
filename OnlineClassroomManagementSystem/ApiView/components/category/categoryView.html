@@ -7,7 +7,6 @@
     * {
         box-sizing: border-box;
     }
-
     /* Button used to open the contact form - fixed at the bottom of the page */
     .open-button {
         background-color: #555;
@@ -17,22 +16,19 @@
         cursor: pointer;
         opacity: 0.8;
     }
-
     /* The popup form - hidden by default */
     .form-popup {
-        margin-left:500px;
+        margin-left: 500px;
         max-width: 600px;
         display: none;
         border: 3px solid #f1f1f1;
         z-index: 9;
     }
-
     /* Add styles to the form container */
     .form-container {
         max-width: 300px;
-        background-color:white;
+        background-color: white;
     }
-
         /* Full-width input fields */
         .form-container textarea[type=text], .form-container input[type=text] {
             width: 100%;
@@ -41,13 +37,11 @@
             border: none;
             background: #f1f1f1;
         }
-
             /* When the inputs get focus, do something */
             .form-container textarea[type=text]:focus, .form-container input[type=text]:focus {
                 background-color: #ddd;
                 outline: none;
             }
-
         /* Set a style for the submit/login button */
         .form-container .btn {
             background-color: #4CAF50;
@@ -59,12 +53,10 @@
             margin-bottom: 10px;
             opacity: 0.8;
         }
-
         /* Add a red background color to the cancel button */
         .form-container .cancel {
             background-color: red;
         }
-
         /* Add some hover effects to buttons */
         .form-container .btn:hover, .open-button:hover {
             opacity: 1;
@@ -173,7 +165,7 @@
                                 </td>
                                 <td style="text-align:center">
 
-                                    <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" data-toggle="modal" data-target="#editModal"  ng-click="editCategory($index, item)"><i class="fa fa-pencil"></i> </button>                                    <button ng-show="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="updateCategory($index,item)">OK </button>
+                                    <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" data-toggle="modal" data-target="#editModal" ng-click="editCategory($index, item)"><i class="fa fa-pencil"></i> </button>                                    <button ng-show="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="updateCategory($index,item)">OK </button>
                                     <button class="btn btn-sm btn-circle btn-danger" ng-click="removeCategory($index)"><i class="fa fa-trash"></i> </button>
                                 </td>
                             </tr>
@@ -202,16 +194,13 @@
         document.getElementById("addForm").style.display = "inline-block";
         document.getElementById("example1").style.display = "none";
     }
-
     function closeAddForm() {
         document.getElementById("addForm").style.display = "none";
         document.getElementById("example1").style.display = "table";
     }
-
     function closeEditForm() {
         document.getElementById("editForm").style.display = "none";
         document.getElementById("example1").style.display = "table";
         window.location.reload();
     }
 </script>
-

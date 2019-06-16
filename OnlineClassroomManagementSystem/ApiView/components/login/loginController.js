@@ -13,6 +13,11 @@
                 apiService.post('login', $scope.loginData, function (result) {
                     if (result.data.token != undefined)  {
                         authenticationService.setTokenInfo(result.data.token);
+                        if (result.data.UserLevel == 2) {
+                            window.location.href = 'http://localhost:2697/#!/student_class'
+
+                        }
+                        else
                         window.location.href = 'http://localhost:2697/#!/admin'
                     }
                     else {

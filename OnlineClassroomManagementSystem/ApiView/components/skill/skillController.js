@@ -34,7 +34,7 @@
     function skillController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService) {
         $scope.fullData = [];
         $scope.curDataFilter = $scope.fullData;
-        $scope.updateModel = {};
+        $scope.updateModal = {};
         $scope.addModal = {};
         $scope.orderByMe = function (x) {
             $scope.myOrderBy = x;
@@ -44,6 +44,11 @@
         $scope.addSkill = function () {
             if (!$scope.addModal.SkillName) {
                 alert("Tên kĩ năng còn thiếu");
+                return;
+            }
+            if ($scope.skillNameData.indexOf($scope.addModal.SkillName.toLowerCase()) > -1) {
+                alert("Tên kĩ năng đã có");
+                $scope.addModal.SkillName = '';
                 return;
             }
             if (!$scope.addModal.Description) {
@@ -82,13 +87,26 @@
             }
         }
         $scope.editItem = [];
-        $scope.editSkill = function (index) {
-            $scope.editItem[index] = true;
+        $scope.editSkill = function (index, item) {
+            $scope.updateModal.Description = item.Description;
+            $scope.updateModal.SkillName = item.SkillName;
+            $scope.updateModal.SkillID = item.SkillID;
+            $scope.updateModal.index = index;
+            
         }
-        $scope.updateSkill = function (index, edt) {
-            apiService.put('Skill/' + edt.SkillID, edt, function (result) {
-                $scope.curDataFilter[index].SkillName = edt.SkillName;
-                $scope.curDataFilter[index].Description = edt.Description;
+        $scope.updateSkill = function (edt) {
+            if ($scope.skillNameData.indexOf($scope.updateModal.SkillName.toLowerCase()) > -1) {
+                alert("Tên kĩ năng đã có");
+                return;
+            }
+            var skill = {
+                "SkillID": $scope.updateModal.SkillID,
+                "SkillName": $scope.updateModal.SkillName,
+                "Description": $scope.updateModal.Description
+            }
+            apiService.put('Skill/' + $scope.updateModal.SkillID, skill, function (result) {
+                $scope.curDataFilter[$scope.updateModal.index].SkillName = $scope.updateModal.SkillName;
+                $scope.curDataFilter[$scope.updateModal.index].Description = $scope.updateModal.Description;
                 $scope.editItem[index] = false;
             }, function (erro) {
                 alert('Lỗi putAPI');
@@ -98,9 +116,11 @@
         function getData() {
             apiService.get('Skill', null, function (result) {
                 $scope.curDataFilter = [];
+                $scope.skillNameData = [];
 
                 result.data[0].forEach(function (element) {
                     $scope.curDataFilter.push(element);
+                    $scope.skillNameData.push(element.SkillName.toLowerCase());
                 });
                 $scope.fullData = $scope.curDataFilter;
             }, function (erro) {

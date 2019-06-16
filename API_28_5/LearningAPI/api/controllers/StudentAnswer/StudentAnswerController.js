@@ -26,20 +26,20 @@ module.exports = {
                     res.json(result.recordsets);
             });
     },
-    put: (req, res) => {
+    update: (req, res) => {
         //Check Authentication to update the answer ?
         const request = new sql.Request()
             .input('QuestionID', sql.NChar, req.params.QuestionID)
             .input('StudentID', sql.NVarChar, req.user._id)
             .input('AnswerContent', sql.NVarChar, req.body.AnswerContent)
             .input('AnswerID', sql.NChar, req.body.AnswerID)
-            .query('UPDATE Student_Answer SET AnswerID = @AnswerID, AnswerContent = @AnswerContent WHERE QuestionID = @QuestionID AND StudentID = @id', (err, result) => {
+            .query('UPDATE Student_Answer SET AnswerID = @AnswerID, AnswerContent = @AnswerContent WHERE QuestionID = @QuestionID AND StudentID = @StudentID', (err, result) => {
                 if (err)
                     res.status(501).json({ message: 'Internal Server Erro' });
                 res.json({ message: 'Update succes' });
             });
     },
-    post: (req, res) => {
+    store: (req, res) => {
         //Check Authentication to update the answer ?
         const request = new sql.Request()
             .input('QuestionID', sql.NChar, req.params.QuestionID)

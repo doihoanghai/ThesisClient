@@ -7,7 +7,7 @@ module.exports = {
     get: (req, res) => {
         const request = new sql.Request()
             .input('ClassID', sql.NChar, req.params.ClassID)
-            .query('SELECT Id,FullName,Address,BirthDay,Email,Role FROM Class_Student LEFT JOIN ApplicationUsers on StudentID = Id where ClassID = @ClassID', (err, result) => {
+            .query('SELECT Id,FullName,Address,BirthDay,Email,UserName FROM Class_Student LEFT JOIN ApplicationUsers on StudentID = Id where ClassID = @ClassID', (err, result) => {
                 if (err) {
                     res.json({ message: 'Erro !!!' });
                 }

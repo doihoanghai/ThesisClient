@@ -9,7 +9,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <select ng-change="val()" ng-model="CurQuestion" id="question" style="text-align:center;margin:5px;">
+                    <select ng-click="val()" ng-model="CurQuestion" id="question" style="text-align:center;margin:5px;">
                         <option value={{$index}} ng-repeat="question in curDataFilter track by $index"> Câu {{$index+1}} </option>
                     </select>
                     <!-- SHOW BUTTON  -->
@@ -246,7 +246,7 @@
                             <br />
                         </div>
                         <div class="box-body" ng-repeat="answer2 in answerData2 track by $index " ng-if="answer2.QuestionID==question2.QuestionID">
-                            <input ng-change="chooseAnswer(question2,answer2)" ng-model="ChoiceModal" class="dapan" type="radio" name="answer" value={{$index}}> {{answer2.AnswerContent}}
+                            <input ng-click="chooseAnswer(question2,answer2)" ng-model="ChoiceModal" class="dapan" type="radio" name="answer" value={{$index}}> {{answer2.AnswerContent}}
                             <!-- DELETE BUTTON  -->
                             <button style="float:right;margin:2px;" class="btn btn-sm btn-circle btn-danger" ng-click="removeAnswer(answer2,$index)"><i class="fa fa-trash"></i> </button>
 
@@ -264,15 +264,16 @@
                     <div class="box-header" ng-show="curDataFilter[CurQuestion].QuestionType == 1">
                         <h2 style="text-align:center">Quản lý câu trả lời</h2>
                         <input type="text" placeholder="Nhập câu trả lời" ng-model="addModal.AnswerContent" class="form-control" style="float:left;width:89%;">
-                        <button style="float:right;width:10%;" type="button" class="btn btn-primary" ng-click="addAnswer(qIndex)"> Thêm</button>
+                        <button style="float:right;width:10%;" type="button" class="btn btn-primary" ng-click="addAnswer(CurQuestion)"> Thêm</button>
                     </div>
-                    <div id="tracnghiem" class="box-header" ng-repeat="answer in answerData track by $index">
-                        <input style="float:left;" ng-change="chooseAnswer(curDataFilter[CurQuestion],answer)" ng-model="ChoiceModal" class="dapan" type="radio" name="answer" id="answer{{$index}}"> <p id="{{answer.AnswerID}}">{{answer.AnswerContent}}</p>
+                    <div id="tracnghiem" class="box-header" ng-repeat="answer in answerData track by $index" on-finish-render="ngRepeatFinished" >
+                        <input style="float:left;display:inline-block" ng-change="chooseAnswer(curDataFilter[CurQuestion],answer)" ng-model="ChoiceModal" class="dapan" type="radio" name="answer" id="answer{{$index}}"> <p id="{{answer.AnswerID}}">{{answer.AnswerContent}}</p>
+                        <!--<div ng-if="$last" ng-init="val()"></div>-->
                         <!-- DELETE BUTTON  -->
-                        <button style="float:right;margin:2px;" class="btn btn-sm btn-circle btn-danger" ng-click="removeAnswer(answer, $index)"><i class="fa fa-trash"></i> </button>
+                        <button style="float:right;margin:2px;display:inline-block" class="btn btn-sm btn-circle btn-danger" ng-click="removeAnswer(answer, $index)"><i class="fa fa-trash"></i> </button>
 
                         <!-- EDIT BUTTON  -->
-                        <button style="float:right;margin:2px;" class="btn btn-sm btn-circle btn-success" data-toggle="modal" data-target="#EditAnswerModal" ng-click="editAnswer(answer)"><i class="fa fa-pencil"></i> </button>
+                        <button style="float:right;margin:2px;display:inline-block" class="btn btn-sm btn-circle btn-success" data-toggle="modal" data-target="#EditAnswerModal" ng-click="editAnswer(answer)"><i class="fa fa-pencil"></i> </button>
 
                     </div>
 
