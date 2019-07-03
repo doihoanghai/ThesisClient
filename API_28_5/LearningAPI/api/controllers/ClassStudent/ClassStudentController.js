@@ -54,7 +54,7 @@ module.exports = {
             });
     },
     activeCode: (req, res) => {
-        if (user.UserLevel == 2) {
+        if ( req.user.UserLevel == 2) {
             const request = new sql.Request()
                 .input('Code', sql.NChar, req.params.Code)
                 .input('StudentID', sql.NVarChar, req.user._id)

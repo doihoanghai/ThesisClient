@@ -18,7 +18,7 @@ module.exports = {
     },
     store: (req, res) => {
         const request = new sql.Request()
-            .input('teacherID', sql.NVarChar, req.body.TeacherID)
+            .input('teacherID', sql.NVarChar, req.user._id)
             .input('CourseID', sql.NChar, req.body.CourseID)
             .input('role', sql.Int, req.body.Role)
             .query('INSERT INTO Course_Teacher (TeacherID,CourseID,Role) VALUES (@teacherID,@CourseID,@role)', (err, result) => {

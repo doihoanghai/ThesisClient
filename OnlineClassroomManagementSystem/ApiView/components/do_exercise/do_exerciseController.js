@@ -1,11 +1,11 @@
 ﻿(function (app) {
     app.controller('do_exerciseController', do_exerciseController);
 
-    do_exerciseController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService'];
+    do_exerciseController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService', 'localStorageService'];
 
 
 
-    function do_exerciseController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService) {
+    function do_exerciseController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService, localStorageService) {
         $scope.CurQuestion = {};
         $scope.cauhoi = {};
         $scope.updateModal = {};
@@ -16,7 +16,6 @@
         $scope.answerData = {};
         $scope.answerData2 = {};
         $scope.showSingle = true;
-        $scope.mangCauHoi = [{ data: 'Câu 1' }, { data: 'Câu 1' }, { data: 'Câu 1' }, { data: 'Câu 1' }, { data: 'Câu 1' }, { data: 'Câu 1' }, { data: 'Câu 1' }, { data: 'Câu 1' }, { data: 'Câu 1' }, { data: 'Câu 1' },]
         //Answer//
         //Load Answer Each
         $scope.val = function () {
@@ -39,10 +38,10 @@
                 });
             apiService.get('StudentAnswer/' + $scope.curDataFilter[index].QuestionID, null, function (result) {
                 //$scope.qIndex = $scope.curDataFilter[$scope.qIndex].QuestionID;
-                $scope.listLength = $scope.curDataFilter.length - 1;
+                //$scope.listLength = $scope.curDataFilter.length - 1;
                 result.data[0].forEach(function (element) {
                     $scope.addModal.AnswerContent = element.AnswerContent;
-                    if ($scope.curDataFilter[CurQuestion].QuestionType == 1) {
+                    if ($scope.curDataFilter[index].QuestionType == 1) {
                         $scope.chosen = element.AnswerID;
                     }
                 });
@@ -63,20 +62,6 @@
                     }
                 }
             });
-        }
-        $scope.clickBackNext = function (element) {
-            $scope.testDate23 = element.currentTarget.value; // this will return the value of the button
-            
-            if ($scope.testDate23 == 'next') {
-                $scope.CurQuestion *= 1;
-                $scope.CurQuestion += 1;
-                $scope.getAnswer($scope.CurQuestion);
-            }
-            if ($scope.testDate23 == 'back') {
-                $scope.CurQuestion *= 1;
-                $scope.CurQuestion -= 1;
-                $scope.getAnswer($scope.CurQuestion);
-            }
         }
         ////ADD
         $scope.addAnswer = function (index) {
@@ -145,17 +130,71 @@
                 alert('Lỗi postAPI');
             });
         }
+        //Question Button
+        $scope.clickQuestion = function (index) {
+            $scope.currentIndex = index;
+            document.getElementById('socau').innerHTML = index+1;
+            $scope.curQuestType = $scope.curDataFilter[index].QuestionType;
+            document.getElementById('debai').innerHTML = $scope.curDataFilter[index].QuestionContent;
+            $scope.getAnswer(index);
+            apiService.get('StudentAnswer/' + $scope.curDataFilter[index].QuestionID, null, function (result) {
+                //$scope.qIndex = $scope.curDataFilter[$scope.qIndex].QuestionID;
+                //$scope.listLength = $scope.curDataFilter.length - 1;
+                result.data[0].forEach(function (element) {
+                    $scope.addModal.AnswerContent = element.AnswerContent;
+                    if ($scope.curDataFilter[index].QuestionType == 1) {
+                        $scope.chosen = element.AnswerID;
+                    }
+                });
 
-
+            }, function (erro) {
+                alert('Lỗi getAPI');
+            });
+            $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
+                //you also get the actual event object
+                //do stuff, execute functions -- whatever...
+                for (var j = 0; j < $scope.answerData.length; j++) {
+                    if ($scope.curDataFilter[index].AnswerID == $scope.chosen) {
+                        var answerID = "answer" + j;
+                        var ao = document.getElementById(answerID);
+                        $('#' + answerID).prop('checked', true);
+                        //var radioButton = document.getElementById(answerID);
+                        //radioButton.checked = true;
+                    }
+                }
+            });
+        }
+        //Back Next Button
+        $scope.clickBackNext = function (event) {
+            if (event.currentTarget.value == 'next') {
+                $scope.currentIndex += 1;
+                document.getElementById('socau').innerHTML = $scope.currentIndex + 1;
+                document.getElementById('debai').innerHTML = $scope.questionData[$scope.currentIndex].QuestionContent;
+                $scope.curQuestType = $scope.curDataFilter[$scope.currentIndex].QuestionType;
+                $scope.getAnswer($scope.currentIndex);
+            }
+            if (event.currentTarget.value == 'back') {
+                $scope.currentIndex -= 1;
+                document.getElementById('socau').innerHTML = $scope.currentIndex + 1;
+                document.getElementById('debai').innerHTML = $scope.questionData[$scope.currentIndex].QuestionContent;
+                $scope.curQuestType = $scope.curDataFilter[$scope.currentIndex].QuestionType;
+                $scope.getAnswer($scope.currentIndex);
+            }
+        }
         function getData() {
             //GET QUESTION
             apiService.get('Question/', null, function (result) {
                 $scope.curDataFilter = [];
-
                 result.data[0].forEach(function (element) {
                     $scope.curDataFilter.push(element);
                 });
                 $scope.questionData = $scope.curDataFilter;
+
+                document.getElementById('socau').innerHTML = 1;
+                document.getElementById('debai').innerHTML = $scope.questionData[0].QuestionContent;
+                $scope.curQuestType = $scope.curDataFilter[0].QuestionType;
+                $scope.currentIndex = 0;
+                $scope.getAnswer(0);
             }, function (erro) {
                 alert('Lỗi getAPI');
                 });
@@ -177,8 +216,14 @@
                 alert('Lỗi getAPI');
             });
         }
-
-        getData();;
+        var checkToken = localStorageService.get("TokenInfo");
+        $scope.UserLevel = localStorageService.get("UserLevel");
+        if (checkToken && $scope.UserLevel==2) {
+            getData();
+        }
+        else {
+            window.location.href = 'http://localhost:2697/#!/login'
+        }
 
     }
 })(angular.module('ocms.do_exercise'));

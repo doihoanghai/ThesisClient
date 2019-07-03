@@ -28,6 +28,7 @@ module.exports = {
     },
     update: (req, res) => {
         const request = new sql.Request()
+            .input('ClassID', sql.NChar, req.params.ClassID)
             .input('ClassName', sql.NVarChar, req.body.ClassName)
             .input('CourseID', sql.NVarChar, req.body.CourseID)
             .input('numOfStudent', sql.Int, req.body.NumOfStudent)

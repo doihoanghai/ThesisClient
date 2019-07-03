@@ -1,7 +1,7 @@
 ﻿(function (app) {
     app.controller('skillController', skillController);
 
-    skillController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService'];
+    skillController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService', 'localStorageService'];
 
     app.directive('onFinishRender', ['$timeout', '$parse', function ($timeout, $parse) {
         return {
@@ -31,11 +31,12 @@
     }]);
 
 
-    function skillController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService) {
+    function skillController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService, localStorageService) {
         $scope.fullData = [];
         $scope.curDataFilter = $scope.fullData;
-        $scope.updateModal = {};
+        $scope.updateModal = {}; 
         $scope.addModal = {};
+        $scope.filterModal = {};
         $scope.orderByMe = function (x) {
             $scope.myOrderBy = x;
         }
@@ -94,8 +95,9 @@
             $scope.updateModal.index = index;
             
         }
-        $scope.updateSkill = function (edt) {
-            if ($scope.skillNameData.indexOf($scope.updateModal.SkillName.toLowerCase()) > -1) {
+        $scope.updateSkill = function () {
+            if ($scope.skillNameData.indexOf($scope.updateModal.SkillName.toLowerCase()) > -1 &&
+                $scope.skillNameData.indexOf($scope.updateModal.SkillName.toLowerCase()) != $scope.updateModal.index ) {
                 alert("Tên kĩ năng đã có");
                 return;
             }
@@ -127,8 +129,14 @@
                 alert('Lỗi getAPI');
             });
         }
-
-        getData();
+        var checkToken = localStorageService.get("TokenInfo");
+        $scope.UserLevel = localStorageService.get("UserLevel");
+        if (checkToken && $scope.UserLevel == 1) {
+            getData();
+        }
+        else {
+            window.location.href = 'http://localhost:2697/#!/login'
+        }
 
     }
 })(angular.module('ocms.skill'));

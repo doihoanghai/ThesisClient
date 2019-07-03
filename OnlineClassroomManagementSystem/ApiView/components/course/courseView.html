@@ -11,6 +11,72 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm khóa học</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label"><b>Tên khóa học</b></label>
+                                            <input type="text" placeholder="Nhập tên khóa học" ng-model="addModal.CourseName" class="form-control" id="recipient-name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message-text" class="col-form-label"><b>Mô tả khóa học</b></label>
+                                            <textarea type="text" placeholder="Nhập mô tả khóa học" ng-model="addModal.Description" class="form-control" id="message-text"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label"><b>Số lượng học sinh</b></label>
+                                            <input type="number" placeholder="Nhập tên số lượng học sinh" ng-model="addModal.NumOfStudent" class="form-control" id="recipient-name">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button ng-click="addCourse()" class="btn" data-dismiss="modal">Thêm</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Cập nhật khóa học</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label"><b>Tên khóa học</b></label>
+                                            <input type="text" placeholder="Nhập tên khóa học" ng-model="updateModal.CourseName" class="form-control" id="recipient-name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message-text" class="col-form-label"><b>Mô tả hạng mục</b></label>
+                                            <textarea type="text" placeholder="Nhập mô tả khóa học" ng-model="updateModal.Description" class="form-control" id="message-text"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label"><b>Số lượng học sinh</b></label>
+                                            <input type="number" placeholder="Nhập tên số lượng học sinh" ng-model="updateModal.NumOfStudent" class="form-control" id="recipient-name">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button ng-click="updateCourse()" class="btn" data-dismiss="modal">Cập nhật</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -22,25 +88,25 @@
                             <tr>
 
                                 <td>
-                                    <input class="form-control w3-input" placeholder="Nhập tên khóa học" style="width:100%!important" ng-model="addModal.CourseName" >
+                                    <input class="form-control w3-input" placeholder="Nhập tên khóa học" style="width:100%!important" ng-model="filterModal.CourseName">
                                 </td>
 
                                 <td>
-                                    <input class="form-control w3-input" placeholder="Nhập mô tả khóa học" style="width:100%!important" ng-model="addModal.Description" >
+                                    <input class="form-control w3-input" placeholder="Nhập mô tả khóa học" style="width:100%!important" ng-model="filterModal.Description">
                                 </td>
 
 
                                 <td>
-                                    <input class="form-control w3-input" type="number" placeholder="Nhập số lượng học sinh" style="width:100%!important" ng-model="addModal.NumOfStudent" >
+                                    <input class="form-control w3-input" type="number" placeholder="Nhập số lượng học sinh" style="width:100%!important" ng-model="filterModal.NumOfStudent">
                                 </td>
 
                                 <td style="text-align:center">
-                                    <button class="btn btn-sm btn-circle btn-success" ng-click="addCourse()"><i class="fa fa-plus"></i> </button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="addModal"> Thêm</button>
                                 </td>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in curDataFilter | filter:addModal | orderBy:myOrderBy track by $index"  on-finish-render="initDataTable()">
+                            <tr ng-repeat="item in curDataFilter | filter:filterModal | orderBy:myOrderBy track by $index" on-finish-render="initDataTable()">
                                 <td>
                                     <div ng-hide="editItem[$index]"><a ui-sref="clickCourse({courseID:item.CourseID, courseName:item.CourseName,clickItem: item})">{{item.CourseName}}</a></div>
                                     <div ng-show="editItem[$index]"><input type="text" style="width:100%!important" ng-model="item.CourseName" /></div>
@@ -54,7 +120,7 @@
                                     <div ng-show="editItem[$index]"><input type="number" ng-model="item.NumOfStudent" /></div>
                                 </td>
                                 <td style="text-align:center">
-                                    <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="editCourse($index)"><i class="fa fa-pencil"></i> </button>
+                                    <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" data-toggle="modal" data-target="#editModal" ng-click="editCourse($index, item)"><i class="fa fa-pencil"></i> </button>
                                     <button ng-show="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="updateCourse($index,item)">OK </button>
                                     <button class="btn btn-sm btn-circle btn-danger" ng-click="removeCourse($index)"><i class="fa fa-trash"></i> </button>
                                 </td>

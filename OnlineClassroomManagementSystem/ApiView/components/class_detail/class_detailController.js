@@ -1,7 +1,7 @@
 ﻿(function (app) {
     app.controller('class_detailController', class_detailController);
 
-    class_detailController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService'];
+    class_detailController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService', 'localStorageService'];
 
     app.directive('onFinishRender', ['$timeout', '$parse', function ($timeout, $parse) {
         return {
@@ -31,7 +31,15 @@
     }]);
 
 
-    function class_detailController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService) {
+    function class_detailController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService, localStorageService) {
+
+        //var checkToken = localStorageService.get("TokenInfo");
+        //$scope.UserLevel = localStorageService.get("UserLevel");
+        //if (checkToken && $scope.UserLevel == 1) {
+        //}
+        //else {
+        //    window.location.href = 'http://localhost:2697/#!/login'
+        //}
         var classID = $state.params.classID;// classID
         $scope.updateModel = {};
         $scope.addModal = {};
@@ -285,18 +293,18 @@
             $scope.studentData.splice(index, 1);
         }
         //REMOVE
-        $scope.removeStudent = function (item) {
+        $scope.removeStudent = function (item,index) {
             var name = item.FullName;
             if (confirm("Bạn có muốn xóa học sinh: " + name + " khỏi lớp học " + $state.params.className + "?")) {
+                //Remove the item from Array using Index.
+                //$scope.addedStudentData.splice(index, 1);//remove unchecked row from checked list
                 apiService.del('Class_Student/' + classID + '/' + item.Id, null, function (result) {
                     alert("Học sinh " + name + "  đã được xóa khỏi lớp học " + $state.params.className);
 
                 }, function (erro) {
                     alert('Lỗi delAPI');
                 })
-
-                //Remove the item from Array using Index.
-                $scope.studentData.splice(index, 1);//remove unchecked row from checked list
+                
             }
         }
             

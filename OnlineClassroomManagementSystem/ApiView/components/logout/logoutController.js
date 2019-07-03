@@ -1,40 +1,20 @@
 ﻿(function (app) {
-    app.controller('loginController', ['$http', '$q', '$scope', 'loginService', '$injector', 'notificationService', '$location', 'apiService', 'authData', '$window', 'authenticationService', 'localStorageService',
+    app.controller('logoutController', ['$http', '$q', '$scope', 'loginService', '$injector', 'notificationService', '$location', 'apiService', 'authData', '$window', 'authenticationService', 'localStorageService',
         function ($http, $q, $scope, loginService, $injector, notificationService, $location, apiService, authData, $window, authenticationService, localStorageService) {
+            
 
-            //$scope.loginData = {
-            //    UserName: "",
-            //    Password: ""
-            //};
+
             localStorageService.set("UserLevel", null);
             localStorageService.set("TokenInfo", null);
+            window.location.href = 'http://localhost:2697/#!/login'
+                //apiService.post('logout', null, function (result) {
+                //    alert("Đăng xuất");
 
+                //}, function (erro) {
+                //    alert('Lỗi postAPI');
+                //});
 
-            $scope.loginSubmit = function () {
-
-                apiService.post('login', $scope.loginData, function (result) {
-                    if (result.data.token != undefined)  {
-                        authenticationService.setTokenInfo(result.data.token);
-                        localStorageService.set("UserLevel", result.data.UserLevel);
-                        if (result.data.UserLevel == 2) {
-                            window.location.href = 'http://localhost:2697/#!/student_class'
-
-                        }
-                        if (result.data.UserLevel < 2) {
-                            window.location.href = 'http://localhost:2697/#!/admin'
-
-                        }
-                        else
-                            return;
-                    }
-                    else {
-                        alert(result.data.message);
-                    }
-                }, function (erro) {
-                    alert('Lỗi postAPI');
-                    });
-
-                //loginService.login($scope.loginData.userName, $scope.loginData.password).then(function (response) {
+                //logoutService.logout($scope.logoutData.userName, $scope.logoutData.password).then(function (response) {
                 //    if (response != null && response.data.error != undefined) {
                 //        notificationService.displayError("Đăng nhập không đúng.");
                 //    }
@@ -44,10 +24,10 @@
 
                 //        var config = {
                 //            params: {
-                //                password: $scope.loginData.password
+                //                password: $scope.logoutData.password
                 //            }
                 //        }
-                //        var url = 'api/account/detail/' + $scope.loginData.userName;
+                //        var url = 'api/account/detail/' + $scope.logoutData.userName;
                 //        apiService.get(url, config, function (response) {
 
                 //            authData.authenticationData.fullName = response.data.FullName;
@@ -57,7 +37,7 @@
 
                 //            authenticationService.setTokenInfo(authData.authenticationData);
 
-                //            apiService.get('api/applicationUser/getListMenu?userName=' + $scope.loginData.userName + "&passWord=" + $scope.loginData.password, null, function (menu) {
+                //            apiService.get('api/applicationUser/getListMenu?userName=' + $scope.logoutData.userName + "&passWord=" + $scope.logoutData.password, null, function (menu) {
 
 
                 //                var listMenu = menu.data;
@@ -76,6 +56,5 @@
                 //    }
 
                 //});
-            }
         }]);
 })(angular.module('ocms'));

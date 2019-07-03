@@ -1,11 +1,11 @@
 ﻿(function (app) {
     app.controller('student_exerciseController', student_exerciseController);
 
-    student_exerciseController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService'];
+    student_exerciseController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService', 'localStorageService'];
 
 
 
-    function student_exerciseController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService) {
+    function student_exerciseController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService, localStorageService) {
         $scope.CurQuestion = {};
         $scope.cauhoi = {};
         $scope.updateModal = {};
@@ -259,7 +259,14 @@
                 });
         }
 
-        getData();;
+        var checkToken = localStorageService.get("TokenInfo");
+        $scope.UserLevel = localStorageService.get("UserLevel");
+        if (checkToken && $scope.UserLevel == 2) {
+            getData();
+        }
+        else {
+            window.location.href = 'http://localhost:2697/#!/login'
+        }
 
     }
 })(angular.module('ocms.student_exercise'));

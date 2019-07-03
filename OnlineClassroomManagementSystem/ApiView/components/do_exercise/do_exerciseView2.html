@@ -102,10 +102,10 @@
         width: 100%;
         /* font-weight: 600 !important; */
         padding: 7px 10px;
-        font-size: 15px !important;
+        font-size: 13px !important;
         border-radius: 0px;
-        word-spacing: 4px;
-        letter-spacing: 1px;
+        word-spacing: 2px;
+        letter-spacing: 0.5px;
     }
 
         .btn-success:hover {
@@ -364,114 +364,41 @@
 
 
 </style>
-<div style=" background-image: url(https://st2.depositphotos.com/4018617/5965/v/950/depositphotos_59653533-stock-illustration-seamless-space-pattern-childish-background.jpg);">
+<div >
     
     <div class="row">
         <br><br>
-            <div class="col-sm-4" style="margin-left:35px;width:10%;">
-                <div class="quiz" id="quiz" data-toggle="buttons">
-                    <table>
-                        <tr ng-repeat="item in mangCauHoi" ng-switch on="$index % 2">
-                            <td ng-switch-when="0">
-                                <label class="element-animation1 btn btn-md btn-primary btn-block" style="display:block"><span class="btn-label" style="display:inline-block"></span> <input type="radio" name="q_answer" value="1">{{mangCauHoi[$index].data}}</label>
-                            </td>
-                            <td ng-switch-when="0">
-                                <span ng-show="items[$index+1]">
-                                    <label class="element-animation1 btn btn-md btn-primary btn-block" style="display:block"><span class="btn-label" style="display:inline-block"></span> <input type="radio" name="q_answer" value="1">{{mangCauHoi[$index+1].data}}</label>
-                                </span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-            </div>
-        <!--<div class="col-sm-4" style="margin-left:35px;width:10%;">
-                <div class="quiz" id="quiz" data-toggle="buttons">
-        <label class="element-animation1 btn btn-md btn-primary btn-block" style="display:block"><span class="btn-label" style="display:inline-block"></span> <input type="radio" name="q_answer" value="1">Câu 1</label>
-        <label class="element-animation1 btn btn-md btn-primary btn-block"><span class="btn-label"></span> <input type="radio" name="q_answer" value="1">Câu 2</label>
-        <label class="element-animation1 btn btn-md btn-primary btn-block"><span class="btn-label"></span> <input type="radio" name="q_answer" value="1">Câu 3</label>
-        <label class="element-animation1 btn btn-md btn-primary btn-block"><span class="btn-label"></span> <input type="radio" name="q_answer" value="1">Câu 4</label>
-        <label class="element-animation1 btn btn-md btn-primary btn-block"><span class="btn-label"></span> <input type="radio" name="q_answer" value="1">Câu 5</label>
-        <label class="element-animation1 btn btn-md btn-primary btn-block"><span class="btn-label"></span> <input type="radio" name="q_answer" value="1">Câu 6</label>
-        <label class="element-animation1 btn btn-md btn-primary btn-block"><span class="btn-label"></span> <input type="radio" name="q_answer" value="1">Câu 7</label>
-        <label class="element-animation1 btn btn-md btn-primary btn-block"><span class="btn-label"></span> <input type="radio" name="q_answer" value="1">Câu 8</label>
-        <label class="element-animation1 btn btn-md btn-primary btn-block"><span class="btn-label"></span> <input type="radio" name="q_answer" value="1">Câu 9</label>
-        <label class="element-animation1 btn btn-md btn-primary btn-block"><span class="btn-label"></span> <input type="radio" name="q_answer" value="1">Câu 10</label>
-    </div>
-            </div>-->
-        <div class="col-sm-6 col-sm-offset-2 ">
+        <div class="col-sm-6 col-sm-offset-2">
             <div class="loader">
                 <div id="quiz">
 
-                    <div class="question">
+                    <div class="question" style="text-align:center;">
                         <h3>
-                            <span class="label label-warning" id="qid">1</span>
-                            <span id="question"> How can you add a single line comment in a JavaScript?</span>
+                            <span class="label label-warning" id="socau" ></span>
+                            <span id="debai"></span>
                         </h3>
-                    </div>
-                    <ul>
-                        <li>
-                            <input type="radio" id="f-option" name="selector" value="1">
-                            <label for="f-option" class="element-animation">/*-- comment --*/</label>
+                    </div>                        
+                    <textarea ng-show="curQuestType == 2" style="text-align:center;width :100%;font-size:x-large;" placeholder="Nhập câu trả lời" rows="10" ng-model="addModal.AnswerContent" ></textarea>
+                    <ul ng-repeat="answer in answerData track by $index" on-finish-render="ngRepeatFinished">
+                        <li style="width:109%;">
+                            <input type="radio" id="answer{{$index}}" name="selector" value="1">
+                            <label for="f-option" class="element-animation" ng-click="chooseAnswer(curDataFilter[currentIndex],answer)">{{answer.AnswerContent}}</label>
                             <div class="check"></div>
-                        </li>
-
-                        <li>
-                            <input type="radio" id="s-option" name="selector" value="2">
-                            <label for="s-option" class="element-animation">comment //</label>
-                            <div class="check"><div class="inside"></div></div>
-                        </li>
-
-                        <li>
-                            <input type="radio" id="t-option" name="selector" value="3">
-                            <label for="t-option" class="element-animation">comment [ ]</label>
-                            <div class="check"><div class="inside"></div></div>
-                        </li>
-                        <li>
-                            <input type="radio" id="f-option" name="selector" value="1">
-                            <label for="f-option" class="element-animation">/*-- comment --*/</label>
-                            <div class="check"></div>
-                        </li>
-
-                        <li>
-                            <input type="radio" id="s-option" name="selector" value="2">
-                            <label for="s-option" class="element-animation">comment //</label>
-                            <div class="check"><div class="inside"></div></div>
-                        </li>
-
-                        <li>
-                            <input type="radio" id="t-option" name="selector" value="3">
-                            <label for="t-option" class="element-animation">comment [ ]</label>
-                            <div class="check"><div class="inside"></div></div>
                         </li>
                     </ul>
-                    <button style="float:left;width:10%;" type="button" value="back" class="btn btn-primary" ng-model="testDate23" ng-click="clickBackNext($event)">< BACK </button>
 
-                    <button style="float:right;width:10%;" type="button" value="next" class="btn btn-primary" ng-model="testDate23" ng-click="clickBackNext($event)"> NEXT ></button>
 
                 </div>
-            </div>
-            <div class="text-muted">
-                <span id="answer"></span>
+                <button style="display:inline;margin-left:35%;margin-top:5px; margin-bottom:5px;" type="button" value="back" class="btn btn-primary" ng-model="backNext" ng-click="clickBackNext($event)">< BACK </button>
+                <button style="display:inline" type="button" value="next" class="btn btn-primary" ng-model="backNext" ng-click="clickBackNext($event)"> NEXT ></button>
+
             </div>
 
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
-            <div id="result-of-question" class="pulse animated" style="display: none;">
-                <span id="totalCorrect" class="pull-right"></span>
-                <table class="table table-hover table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Question No.</th>
-                            <th>Our answer</th>
-                            <th>Your answer</th>
-                            <th>Result</th>
-                        </tr>
-                    </thead>
-                    <tbody id="quizResult"></tbody>
-                </table>
+
+        <div class="col-sm-4 " style="width:30%;column-count:3;height:auto;">
+            <div data-toggle="buttons" ng-repeat="item in curDataFilter track by $index" >
+                <label ng-click="clickQuestion($index)" class=" btn btn-md btn-primary btn-block"><input type="radio" name="q_answer" value="1">Câu {{$index+1}}</label>
             </div>
         </div>
     </div>

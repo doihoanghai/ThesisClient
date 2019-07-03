@@ -1,35 +1,73 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <style>
+
+        .dropbtn {
+            background-color: #518ba5;
+            color: white;
+            padding: 16px;
+            font-size: 14px;
+            border: none;
+        }
+
+        .dropdown {
+            float:right;
+            position: relative;
+            display: inline-block;
+            width:10%;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            width: 100%;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 5px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #ddd;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #204d74;
+        }
+
+        .wrapper.ng-scope {
+            background-image: url(https://st2.depositphotos.com/4018617/5965/v/950/depositphotos_59653533-stock-illustration-seamless-space-pattern-childish-background.jpg);
+        }
+
         .force-scroll {
             overflow-y: scroll;
             height: 300px;
         }
+
         .notification {
             display: inline-block;
             position: relative;
-            padding: 0.6em;
-            background: #3498db;
+            padding: 0.2em;
+            background: #518ba5;
             border-radius: 0.2em;
             font-size: 1.3em;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
-            .notification::before,
-            .notification::after {
-                color: #fff;
-                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-            }
-
-            .notification::before {
-                display: block;
-                content: "\f0f3";
-                font-family: "FontAwesome";
-                transform-origin: top center;
-            }
 
             .notification .badge {
                 position: absolute;
@@ -44,77 +82,103 @@
 </head>
 <body>
 
-    <div style="background-color:#222d32">
-        <br />
-        <h4 style="text-align:left;color:#e9ebee;font-weight:700;margin-left:10px">
-            <br /><a href="http://localhost:2697/#!/admin"> HTQL LỚP HỌC TRỰC TUYẾN </a>
-            <button style="float:right;margin-right:10px;margin-bottom:10px" onclick="myFunction()" class="notification"><span class="badge">3</span></button><br /><br /><br />
+    <div style="background:#518ba5; height:60px;">
+        <h4 style="float:left;color:#e9ebee;font-weight:700;margin-left:10px">
+            <i class="fa fa-graduation-cap" aria-hidden="true"></i>OnlineClass
         </h4>
-        <div style="float:right">
+        <div class="dropdown">
+            <button class="dropbtn"><i style="float:right;margin-right:10px;" class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
+            <div class="dropdown-content">
+                <a onclick="logOut()"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+                <a href="http://localhost:2697/#!/edit_profile"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Thông tin cá nhân</a>
+            </div>
 
-            <!--<div id="Demo" class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
-        <a href="#" class="w3-bar-item w3-button">Hải đã nộp bài</a>
-        <a href="#" class="w3-bar-item w3-button">Bài tập của bạn đã được chấm xong</a>
-        <a href="#" class="w3-bar-item w3-button">Thông báo nghỉ lễ 30/4 -1/5</a>
-    </div>-->
-            <ul id="Demo" class="w3-dropdown-content w3-bar-block w3-border force-scroll" style="right:0">
-                <li href="#" class="w3-bar-item w3-button">
-                    <b style="font-size:16px">Hải đã nộp bài</b>
-                    <p style="font-size:13px">Vừa xong</p>
-                    <hr>
-                </li>
-                <li href="#" class="w3-bar-item w3-button">
-                    <b style="font-size:16px">Bài tập của bạn đã được chấm xong</b>
-                    <p style="font-size:13px">1 phút trước</p>
-                    <hr>
-                </li>
-                <li href="#" class="w3-bar-item w3-button">
-                    <b style="font-size:16px">Thông báo nghỉ lễ 30/4 -1/5</b>
-                    <p style="font-size:13px">5 ngày trước</p>
-                    <hr>
-                </li>
-                <li href="#" class="w3-bar-item w3-button">
-                    Khoa đã yêu cầu tham gia lớp học.
-                    <hr>
-                </li>
-                <li href="#" class="w3-bar-item w3-button">
-                    Yêu cầu tham gia của bạn được chấp nhận.
-                    <hr>
-                </li>
-                <li href="#" class="w3-bar-item w3-button">
-                    Thông báo kiểm tra giữa HK1 18-19.
-                    <hr>
-                </li>
-            </ul>
             <script>
-                function myFunction() {
-                    var x = document.getElementById("Demo");
-                    if (x.className.indexOf("w3-show") == -1) {
-                        x.className += " w3-show";
-                    } else {
-                        x.className = x.className.replace(" w3-show", "");
+                function logOut() {
+                    if (confirm("Bạn có muốn đăng xuất?")) {
+                        window.location.href = 'http://localhost:2697/#!/logout'
                     }
                 }
             </script>
-            <br />
         </div>
-
+        <h4 style="float:right;color:#e9ebee;font-weight:700;margin-left:10px">
+            <label style="float:right;margin-right:10px;" onclick="myFunction()" class="notification"><i class="fa fa-bell-o" style="color:white;" aria-hidden="true"></i><span class="badge">3</span></label>
+        </h4>
     </div>
 
-    <!--<ul>
-        <li><a href="http://localhost:2697/#!/category"><i class="fa fa-angle-right"></i> Hạng mục </a></li>
-        <li><a href="http://localhost:2697/#!/course"><i class="fa fa-angle-right"></i> Khóa học </a></li>
-        <li><a href="http://localhost:2697/#!/skill"><i class="fa fa-angle-right"></i> Kĩ năng </a></li>
-
-    </ul>-->
-
+    <div style="float:right">
+        <ul id="Demo" class="w3-dropdown-content w3-bar-block w3-border force-scroll" style="right:0">
+            <li href="#" class="w3-bar-item w3-button">
+                <b style="font-size:16px">Hải đã nộp bài</b>
+                <p style="font-size:13px">Vừa xong</p>
+                <hr>
+            </li>
+            <li href="#" class="w3-bar-item w3-button">
+                <b style="font-size:16px">Bài tập của bạn đã được chấm xong</b>
+                <p style="font-size:13px">1 phút trước</p>
+                <hr>
+            </li>
+            <li href="#" class="w3-bar-item w3-button">
+                <b style="font-size:16px">Thông báo nghỉ lễ 30/4 -1/5</b>
+                <p style="font-size:13px">5 ngày trước</p>
+                <hr>
+            </li>
+            <li href="#" class="w3-bar-item w3-button">
+                Khoa đã yêu cầu tham gia lớp học.
+                <hr>
+            </li>
+            <li href="#" class="w3-bar-item w3-button">
+                Yêu cầu tham gia của bạn được chấp nhận.
+                <hr>
+            </li>
+            <li href="#" class="w3-bar-item w3-button">
+                Thông báo kiểm tra giữa HK1 18-19.
+                <hr>
+            </li>
+        </ul>
+        <script>
+            function myFunction() {
+                var x = document.getElementById("Demo");
+                if (x.className.indexOf("w3-show") == -1) {
+                    x.className += " w3-show";
+                } else {
+                    x.className = x.className.replace(" w3-show", "");
+                }
+            }
+        </script>
+        <br />
+    </div>
     <div>
 
         <!-- Main content -->
         <section>
             <!-- Main row -->
-            <div class="row">
-                <div ui-view id="ui-view"></div>
+
+            <div class="col-sm-1 " style="margin:1%;">
+                <div ng-if="UserLevel == '2'">
+
+                    <div style="float:left;">
+                        <button onclick="window.location.href = 'http://localhost:2697/#!/student_class';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-university fa-2x"> Lớp học  </i></button>
+                    </div>
+                    <!--<div style="float:left;">
+            <button onclick="window.location.href = 'http://localhost:2697/#!/student_exercise/class37C243C8-1762-4/course0002%20%20%20%20%20%20%20%20%20%20/';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-file-text-o fa-2x"> Bài tập  </i></button>
+        </div>-->
+                </div>
+                <div ng-if="UserLevel == '0'||UserLevel == '1'">
+
+                    <div style="float:left;">
+                        <button onclick="window.location.href = 'http://localhost:2697/#!/category';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-list fa-2x"> Hạng mục  </i></button>
+                    </div>
+                    <div style="float:left;">
+                        <button onclick="window.location.href = 'http://localhost:2697/#!/course';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-users fa-2x"> Khóa học  </i></button>
+                    </div>
+                    <div ng-if="UserLevel == '0'" style="float:left;" >
+                        <button onclick="window.location.href = 'http://localhost:2697/#!/skill';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-bolt fa-2x"> Kĩ năng </i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9 col-sm-offset-1 ">
+                <div ui-view></div>
             </div>
             <!-- /.row (main row) -->
 

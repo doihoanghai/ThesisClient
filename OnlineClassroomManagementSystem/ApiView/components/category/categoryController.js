@@ -1,7 +1,7 @@
 ﻿(function (app) {
     app.controller('categoryController', categoryController);
 
-    categoryController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService'];
+    categoryController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService', 'localStorageService'];
 
     app.directive('onFinishRender', ['$timeout', '$parse', function ($timeout, $parse) {
         return {
@@ -31,7 +31,7 @@
     }]);
 
 
-    function categoryController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService) {
+    function categoryController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService, localStorageService) {
         $scope.fullData = [];
         $scope.curDataFilter = $scope.fullData;
         $scope.filterModal = {};
@@ -112,6 +112,13 @@
 
             });
         }
-        getData();
+        var checkToken = localStorageService.get("TokenInfo");
+        $scope.UserLevel = localStorageService.get("UserLevel");
+        if (checkToken && $scope.UserLevel == 1) {
+            getData();
+        }
+        else {
+            window.location.href = 'http://localhost:2697/#!/login'
+        }
     }
 })(angular.module('ocms.category'));

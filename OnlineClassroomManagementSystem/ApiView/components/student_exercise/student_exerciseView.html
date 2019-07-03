@@ -16,66 +16,32 @@
                             <thead>
                                 <tr>
                                     <th ng-click="orderByMe('ExerciseName')">Tên bài tập</th>
-                                    <th ng-click="orderByMe('Description')">Mô tả bài tập</th>
-                                    <th ng-click="orderByMe('ExerciseTime')">Thời gian làm bài</th>
-                                    <th ng-click="orderByMe('ExerciseScore')">Điểm số</th>
-                                    <th ng-click="orderByMe('Note')">Ghi chú</th>
                                 </tr>
                                 <tr>
 
                                     <td>
                                         <input class="form-control w3-input" placeholder="Nhập tên bài tập" style="width:100%!important" ng-model="addModal.ExerciseName">
                                     </td>
-
-                                    <td>
-                                        <input class="form-control w3-input" placeholder="Nhập mô tả bài tập" style="width:100%!important" ng-model="addModal.Description">
-                                    </td>
-
-
-                                    <td>
-                                        <input class="form-control w3-input" type="number" placeholder="Nhập thời gian làm bài" style="width:100%!important" ng-model="addModal.ExerciseTime">
-                                    </td>
-
-
-                                    <td>
-                                        <input class="form-control w3-input" type="number" placeholder="Nhập điểm số" style="width:100%!important" ng-model="addModal.ExerciseScore">
-                                    </td>
-
-
-                                    <td>
-                                        <input class="form-control w3-input" placeholder="Nhập ghi chú" style="width:100%!important" ng-model="addModal.Note">
-                                    </td>
                                 </tr>
                             </thead>
                             <tr ng-repeat="item in curDataFilter | filter:addModal | orderBy:myOrderBy track by $index">
 
                                 <td>
-                                    <div><a ui-sref="do_exercise({exerciseID :item.ExerciseID })">{{item.ExerciseName}}</a></div>
+                                    <div style="border-radius: 10px;border: 2px solid lightgray;padding:5px;">
+                                        <h3 style="color:firebrick;"><i class="fa fa-file-text-o" style="color:cadetblue"></i><a ui-sref="do_exercise({exerciseID :item.ExerciseID })"> {{item.ExerciseName}}</a></h3>
+                                        <div><b>Mô tả: </b>{{item.Description}}</div>
+                                        <div><b>Thời gian: </b> {{item.ExerciseTime}}</div>
+                                        <div><b>Điểm số: </b> {{item.ExerciseScore}}</div>
+                                        <div><b>Ghi chú: </b> {{item.Note}}</div>
+
+                                    </div>
                                 </td>
                                 <td>
-                                    <div ng-hide="editItem[$index]">{{item.Description}}</div>
-                                    <div ng-show="editItem[$index]"><input style="width:100%!important" type="text" ng-model="item.Description" /></div>
-                                </td>
-                                <td>
-                                    <div ng-hide="editItem[$index]">{{item.ExerciseTime}}</div>
-                                    <div ng-show="editItem[$index]"><input style="width:100%!important" type="number" ng-model="item.ExerciseTime" /></div>
-                                </td>
-                                <td>
-                                    <div ng-hide="editItem[$index]">{{item.ExerciseScore}}</div>
-                                    <div ng-show="editItem[$index]"><input style="width:100%!important" type="number" ng-model="item.ExerciseScore" /></div>
-                                </td>
-                                <td>
-                                    <div ng-hide="editItem[$index]">{{item.Note}}</div>
-                                    <div ng-show="editItem[$index]"><input style="width:100%!important" type="text" ng-model="item.Note" /></div>
+
                                 </td>
                             </tr>
                             <tfoot>
                                 <tr>
-                                    <th>Tên bài tập</th>
-                                    <th>Mô tả bài tập</th>
-                                    <th>Thời gian làm bài</th>
-                                    <th>Điểm số</th>
-                                    <th>Ghi chú</th>
                                 </tr>
                             </tfoot>
                         </table>

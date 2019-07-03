@@ -81,9 +81,11 @@
                 alert('Đăng ký thành công dưới tên đăng nhập: ' + $scope.signupData.userName);
             },
                 function (erro) {
-                    alert('Lỗi postAPI');
+                    if (erro.data.message =='Username already exists')
+                    alert('Tên đăng ký đã tồn tại');
                     return;
                 });
+            window.location.href = 'http://localhost:2697/#!/login';
 
         }
     }

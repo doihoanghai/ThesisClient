@@ -6,6 +6,7 @@
 
        this.setTokenInfo = function (data) {
            tokenInfo = data;
+           authData.authenticationData.accessToken = tokenInfo;
             localStorageService.set("TokenInfo", tokenInfo);
         }
 

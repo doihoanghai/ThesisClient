@@ -222,7 +222,7 @@
                             <div ng-show="isAdded"><input type="checkbox" id="cbClicked" checked /></div>-->
 
                                                 <button ng-hide="isAddedStudent" class="btn btn-sm btn-circle btn-success" ng-click="addStudent($index)"><i class="fa fa-plus"></i> </button>
-                                                <button ng-show="isAddedStudent" class="btn btn-sm btn-circle btn-danger" ng-click="removeStudent(item)"><i class="fa fa-trash"></i> </button>
+                                                <button ng-show="isAddedStudent" class="btn btn-sm btn-circle btn-danger" ng-click="removeStudent(item,$index)"><i class="fa fa-trash"></i> </button>
                                             </td>
                                         </tr>
                                     </tbody>

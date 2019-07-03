@@ -60,7 +60,7 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button ng-click="updateSkill(item)" class="btn" data-dismiss="modal">Cập nhật</button>
+                                    <button ng-click="updateSkill()" class="btn" data-dismiss="modal">Cập nhật</button>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                                 </div>
                             </div>
@@ -76,11 +76,11 @@
                             <tr>
 
                                 <td>
-                                    <input class="form-control w3-input" placeholder="Nhập tên kĩ năng" style="width:100%!important" ng-model="addModal.SkillName">
+                                    <input class="form-control w3-input" placeholder="Nhập tên kĩ năng" style="width:100%!important" ng-model="filterModal.SkillName">
                                 </td>
 
                                 <td>
-                                    <input class="form-control w3-input" placeholder="Nhập mô tả kĩ năng" style="width:100%!important" ng-model="addModal.Description">
+                                    <input class="form-control w3-input" placeholder="Nhập mô tả kĩ năng" style="width:100%!important" ng-model="filterModal.Description">
                                 </td>
 
                                 <td style="width:10%">
@@ -89,7 +89,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in curDataFilter | filter:addModal | orderBy:myOrderBy track by $index" on-finish-render="initDataTable()">
+                            <tr ng-repeat="item in curDataFilter | filter:filterModal | orderBy:myOrderBy track by $index" on-finish-render="initDataTable()">
                                 <td>
                                     <div ng-hide="editItem[$index]">{{item.SkillName}}</div>
                                     <div ng-show="editItem[$index]"><input type="text" ng-model="item.SkillName" /></div>

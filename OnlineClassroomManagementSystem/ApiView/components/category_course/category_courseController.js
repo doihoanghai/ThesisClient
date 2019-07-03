@@ -1,7 +1,7 @@
 ﻿(function (app) {
     app.controller('category_courseController', category_courseController);
 
-    category_courseController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService'];
+    category_courseController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService', 'localStorageService'];
 
     app.directive('onFinishRender', ['$timeout', '$parse', function ($timeout, $parse) {
         return {
@@ -31,7 +31,15 @@
     }]);
 
 
-    function category_courseController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService) {
+    function category_courseController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService, localStorageService) {
+
+        var checkToken = localStorageService.get("TokenInfo");
+        $scope.UserLevel = localStorageService.get("UserLevel");
+        if (checkToken && $scope.UserLevel == 1) {
+        }
+        else {
+            window.location.href = 'http://localhost:2697/#!/login'
+        }
         $scope.orderByMe = function (x) {
             $scope.myOrderBy = x;
         }

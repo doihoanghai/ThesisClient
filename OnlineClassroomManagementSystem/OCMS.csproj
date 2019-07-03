@@ -224,6 +224,8 @@
     <Content Include="ApiView\components\course_detail\course_detail.module.js" />
     <Content Include="ApiView\components\course_detail\course_detailController.js" />
     <Content Include="ApiView\components\course_detail\course_detailView.html" />
+    <Content Include="ApiView\components\logout\logoutController.js" />
+    <Content Include="ApiView\components\logout\logoutView.html" />
     <Content Include="ApiView\components\question\question.module.js" />
     <Content Include="ApiView\components\question\questionController.js" />
     <Content Include="ApiView\components\question\questionView.html" />

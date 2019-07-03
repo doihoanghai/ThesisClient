@@ -9,14 +9,15 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-
+                    <div style="text-align:right">
+                        <button  ng-click="joinClass()" class="btn btn-primary" style="float:right;margin-bottom:20px;margin-left:10px;">OK</button><input class="form-control"  style="float:right;width:20%!important"  type="text" placeholder="Nhập mã lớp"  ng-model="updateModal.ClassCode"/> <br /><br />
+                    </div>
                     <div class="tab-pane" id="CourseClass">
 
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th ng-click="orderByMe('ClassName')">Tên lớp</th>
-                                    <th ng-click="orderByMe('NumOfStudent')">Số lượng học sinh</th>
                                 </tr>
                                 <tr>
 
@@ -24,27 +25,23 @@
                                         <input class="form-control w3-input" placeholder="Nhập tên lớp" style="width:100%!important" ng-model="addModal.ClassName">
                                     </td>
 
-                                    <td>
-                                        <input class="form-control w3-input" type="number" placeholder="Nhập số lượng học sinh" style="width:100%!important" ng-model="addModal.NumOfStudent">
-                                    </td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="item in curDataFilter| filter:addModal | orderBy:myOrderBy track by $index">
 
                                     <td>
-                                        <div><a ui-sref="clickClassStudent({classID:item.ClassID,courseID:item.CourseID, clickItem: item})">{{item.ClassName}}</a></div>
-                                    </td>
-                                    <td>
-                                        <div >{{item.NumOfStudent}}</div>
+                                        <div style="border-radius: 10px;border: 2px solid lightgray;padding:5px;">
+                                            <h2 style="color:firebrick;"><i class="fa fa-folder-open-o" style="color:cadetblue;"></i><a ui-sref="clickClassStudent({classID:item.ClassID,courseID:item.CourseID, clickItem: item})"><b> {{item.ClassName}}</b></a></h2>
+                                            <div style="display:block"><h4><b style="color:cadetblue;">Giáo viên: </b>{{item.FullName}}</h4></div>
+
+                                        </div>
                                     </td>
                                 </tr>
 
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Tên lớp</th>
-                                    <th>Số lượng học sinh</th>
                                 </tr>
                             </tfoot>
                         </table>

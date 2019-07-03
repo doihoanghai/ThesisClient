@@ -1,7 +1,7 @@
 ﻿(function (app) {
     app.controller('questionController', questionController);
 
-    questionController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService'];
+    questionController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService', 'localStorageService'];
 
     app.directive('onFinishRender', ['$timeout', '$parse', function ($timeout, $parse) {
         return {
@@ -31,7 +31,7 @@
     }]);
 
 
-    function questionController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService) {
+    function questionController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService, localStorageService) {
         $scope.CurQuestion = {};
         $scope.cauhoi = {};
         $scope.updateModal = {};
@@ -208,15 +208,25 @@
                     $('#' + answerID).prop('checked', true);
                 }
             }
+            
         });
 
-        $scope.checkAnswer = function () {
+        $scope.checkAnswer = function (index) {
             
             $scope.addedAnswer = [];
-            $scope.answerData.forEach(function (element) {
-                $scope.addedAnswer.push(element.AnswerContent.toLowerCase());
-            })
-
+            //show single
+            if ($scope.answerData.length>0) {
+                $scope.answerData.forEach(function (element) {
+                    $scope.addedAnswer.push(element.AnswerContent.toLowerCase());
+                })
+            }
+            //show all
+            if ($scope.showSingle == false) {
+                $scope.answerData2.forEach(function (element) {
+                    if (element.QuestionID == $scope.curDataFilter[index].QuestionID) {
+                        $scope.addedAnswer.push(element.AnswerContent.toLowerCase());
+                    }
+                })}
             if ($scope.addedAnswer.indexOf($scope.addModal.AnswerContent.toLowerCase()) > -1) {
                 return false
             }
@@ -233,21 +243,20 @@
                 alert("Nội dung câu trả lời còn thiếu");
                 return
             }
-            if (!$scope.checkAnswer()) {
+            if (!$scope.checkAnswer(index)) {
                 alert("Nội dung câu trả lời trùng lặp");
                 $scope.addModal.AnswerContent = '';
                 return
             }
             
-            if ($scope.addedAnswer.length>0) {
-                var answer = {
+            var answer =
+                {
                     "AnswerID": $scope.addModal.AnswerID,
                     "AnswerContent": $scope.addModal.AnswerContent,
                     "AnswerPath": '',
                     "QuestionID": $scope.curDataFilter[index].QuestionID
                 }
-
-                apiService.post('Answer/' + $scope.curDataFilter[index].QuestionID, answer, function (result) {
+            apiService.post('Answer/' + $scope.curDataFilter[index].QuestionID, answer, function (result) {
                     if ($scope.showSingle == true) {
                         $scope.answerData.push(answer);
                     }
@@ -258,7 +267,6 @@
                 }, function (erro) {
                     alert('Lỗi postAPI');
                     });
-            }
         }
         ////EDIT
         $scope.editAnswer = function (item) {
@@ -332,8 +340,14 @@
                 alert('Lỗi getAPI');
             });
         }
-
-        getData();
+        var checkToken = localStorageService.get("TokenInfo");
+        $scope.UserLevel = localStorageService.get("UserLevel");
+        if (checkToken && $scope.UserLevel == 1) {
+            getData();
+        }
+        else {
+            window.location.href = 'http://localhost:2697/#!/login'
+        }
 
     }
 })(angular.module('ocms.question'));

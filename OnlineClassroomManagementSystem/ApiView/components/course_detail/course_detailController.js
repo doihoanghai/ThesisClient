@@ -1,7 +1,7 @@
 ﻿(function (app) {
     app.controller('course_detailController', course_detailController);
 
-    course_detailController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService',];
+    course_detailController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService', '$ngBootbox', 'apiService', 'notificationService', 'localStorageService'];
 
     app.directive('onFinishRender', ['$timeout', '$parse', function ($timeout, $parse) {
         return {
@@ -31,8 +31,9 @@
     }]);
 
 
-    function course_detailController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService) {
+    function course_detailController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService, localStorageService) {
 
+       
         document.getElementById("title").innerHTML = 'Quản lý khóa học ' + $state.params.courseName;
         var courseID = $state.params.courseID;// courseID
         ///////////////////////
@@ -168,7 +169,7 @@
         //// COURSE CLASS ///
         ////////////////////
         function getClass() {
-            apiService.get('Class/', null, function (result) {
+            apiService.get('Course_Class/' + courseID, null, function (result) {
                 $scope.classData = [];
 
                 result.data[0].forEach(function (element) {
@@ -201,10 +202,9 @@
             }
             apiService.post('Class/', Class, function (result) {
                 $scope.classData.push(Class);
-                window.location.reload();
                 //clear search field
-                $scope.addModal.ClassName = null;
-                $scope.addModal.NumOfStudent = null;
+                $scope.addModal.ClassName = '';
+                $scope.addModal.NumOfStudent = '';
             }, function (erro) {
                 alert('Lỗi postAPI');
             });
@@ -250,7 +250,7 @@
         
         //GET
         function getExercise() {
-            apiService.get('Exercise', null, function (result) {
+            apiService.get('Course_Exercise/' + courseID, null, function (result) {
                 $scope.exerciseData = [];
 
                 result.data[0].forEach(function (element) {

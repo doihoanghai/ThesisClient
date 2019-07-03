@@ -40,6 +40,9 @@
                 url: "/login",
                 templateUrl: "/ApiView/components/login/loginView.html",
                 controller: "loginController"
+            }).state('logout', {
+                url: "/logout",
+                controller: "logoutController"
             });
         $urlRouterProvider.otherwise('/login');
     }

@@ -57,8 +57,6 @@ module.exports = {
         }
 
         switch (req.user.UserLevel) {
-            case 2:
-                break;
             case 1:
                 const request1 = new sql.Request()
                     .input('TeacherID', sql.NVarChar, req.user._id)
@@ -66,9 +64,9 @@ module.exports = {
                     .query('SELECT * FROM Course_Teacher WHERE TeacherID = @TeacherID AND CourseID = @CourseID', (err, result) => {
                         if (err)
                             res.json({ message: 'Internal Server Erro' });
-                        if (result.recordsets == []) {
+                        if (result.recordset.length != 0) {
                             const request = new sql.Request()
-                                .input('courseID', sql.NVarChar, req.body.CourseID)
+                                .input('courseID', sql.NVarChar, req.params.CourseID)
                                 .input('courseName', sql.NVarChar, req.body.CourseName)
                                 .input('description', sql.NVarChar, req.body.Description)
                                 .input('numOfStudent', sql.Int, req.body.NumOfStudent)
@@ -77,10 +75,12 @@ module.exports = {
                                         console.log(err);
                                     res.json({ message: 'Update success!' });
                                 });
+                        }
+                        else{
+                            res.json({message:'Not Allow Access'});
                         } 
                     });
                 break;
-
             case 0:
                 const request = new sql.Request()
                     .input('courseID', sql.NVarChar, req.body.CourseID)
@@ -89,9 +89,14 @@ module.exports = {
                     .input('numOfStudent', sql.Int, req.body.NumOfStudent)
                     .query('UPDATE Course SET CourseName = @courseName, Description = @description, NumOfStudent = @numOfStudent WHERE CourseID = @courseID', (err, result) => {
                         if (err)
-                            console.log(err);
+                            res.json(err);
                         res.json({ message: 'Update success!' });
                     });
+                    break;
+            default : 
+                res.json({message : 'Not Allow Access !'});
+                break;
+
         }
 
         

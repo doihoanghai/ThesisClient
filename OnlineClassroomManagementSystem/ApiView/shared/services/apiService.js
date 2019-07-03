@@ -21,20 +21,14 @@ hostapi = clinic[0].getElementsByTagName("host")[0].firstChild.data;
         }
         function del(url, data, success, failure) {
             authenticationService.setHeader();
-            if (!($('#loaderModal').is(':visible')))
-            {
-                $("#loaderModal").modal();
-                document.body.style.cursor = 'wait';
-            }
+
             $http.delete(apihost + url, data).then(function (result) {
-                $("#loaderModal").modal('hide');
-                document.body.style.cursor = 'auto';
+                
                 success(result);
             }, function (error) {
                 console.log(error.status)
                 if (error.status === 401) {
-                    $("#loaderModal").modal('hide');
-                    document.body.style.cursor = 'auto';
+
                     if (authData.authenticationData.IsAuthenticated == true) {
                         $location.path('/error');
                     } else {
@@ -47,19 +41,10 @@ hostapi = clinic[0].getElementsByTagName("host")[0].firstChild.data;
         }
         function post(url, data, success, failure) {
             authenticationService.setHeader();
-            if (!($('#loaderModal').is(':visible')))
-            {
-                $("#loaderModal").modal();
-                document.body.style.cursor = 'wait';
-            }
             $http.post(apihost + url, data).then(function (result) {
                 success(result);
-                $("#loaderModal").modal('hide');
-                document.body.style.cursor = 'auto';
             }, function (error) {
                 console.log(error.status)
-                $("#loaderModal").modal('hide');
-                document.body.style.cursor = 'auto';
                 if (error.status === 401) {
                     if (authData.authenticationData.IsAuthenticated == true) {
                         $location.path('/error');
@@ -81,17 +66,9 @@ hostapi = clinic[0].getElementsByTagName("host")[0].firstChild.data;
 
         function put(url, data, success, failure) {
             authenticationService.setHeader();
-            if (!($('#loaderModal').is(':visible'))) {
-                $("#loaderModal").modal();
-                document.body.style.cursor = 'wait';
-            }
             $http.put(apihost + url, data).then(function (result) {
-                $("#loaderModal").modal('hide');
-                document.body.style.cursor = 'auto';
                 success(result);
             }, function (error) {
-                $("#loaderModal").modal('hide');
-                document.body.style.cursor = 'auto';
                 console.log(error.status)
                 if (error.status === 401) {
                     if (authData.authenticationData.IsAuthenticated == true) {
@@ -111,20 +88,11 @@ hostapi = clinic[0].getElementsByTagName("host")[0].firstChild.data;
         function get(url, params, success, failure) {
          
             authenticationService.setHeader();
-            if (!($('#loaderModal').is(':visible')))
-            {
-                $("#loaderModal").modal();
-                document.body.style.cursor = 'wait';
-            }
             
             $http.get(apihost + url, params).then(function (result) {
                 success(result);
-                $("#loaderModal").modal('hide');
-                document.body.style.cursor = 'auto';
 
            }, function (error) {
-               $("#loaderModal").modal('hide');
-               document.body.style.cursor = 'auto'; 
                 console.log(error.status)
                 if (error.status === 401) {
                     var dateToken = new Date(authData.authenticationData.timeToken);
