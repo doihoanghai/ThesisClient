@@ -41,6 +41,7 @@
         $scope.answerData = {};
         $scope.answerData2 = {};
         $scope.showSingle = false;
+        $scope.exID = $state.params.exerciseID;
         //Question//
         ////ADD
         $scope.addQuestion = function () {
@@ -338,16 +339,9 @@
                 });
             }, function (erro) {
                 alert('Lỗi getAPI');
-            });
+                });
         }
-        var checkToken = localStorageService.get("TokenInfo");
-        $scope.UserLevel = localStorageService.get("UserLevel");
-        if (checkToken && $scope.UserLevel == 1) {
-            getData();
-        }
-        else {
-            window.location.href = 'http://localhost:2697/#!/login'
-        }
+        getData();
 
     }
 })(angular.module('ocms.question'));

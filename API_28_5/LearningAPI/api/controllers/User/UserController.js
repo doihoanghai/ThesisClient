@@ -18,5 +18,14 @@ module.exports = {
                     res.json({ message: 'Internal Server Erro !' });
                 res.json(result.recordsets);
             });
+    },
+    getProfile : (req,res) => {
+        var request = new sql.Request()
+            .input('Id',sql.NVarChar, req.user._id)
+            .query('SELECT * FROM ApplicationUsers WHERE Id = @Id', (err,result) => {
+                if (err)
+                    res.json({ message: 'Internal Server Erro !' });
+                res.json(result.recordsets);
+            });
     }  
 };

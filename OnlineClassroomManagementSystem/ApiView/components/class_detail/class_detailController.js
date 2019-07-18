@@ -33,21 +33,17 @@
 
     function class_detailController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService, localStorageService) {
 
-        //var checkToken = localStorageService.get("TokenInfo");
-        //$scope.UserLevel = localStorageService.get("UserLevel");
-        //if (checkToken && $scope.UserLevel == 1) {
-        //}
-        //else {
-        //    window.location.href = 'http://localhost:2697/#!/login'
-        //}
+        document.getElementById("title").innerHTML = 'Quản lý lớp học ' + $state.params.className;
         var classID = $state.params.classID;// classID
         $scope.updateModel = {};
+        $scope.filterModal = {};
         $scope.addModal = {};
         $scope.studentModal = {};
         $scope.studentAddModal = {};
         $scope.orderByMe = function (x) {
             $scope.myOrderBy = x;
         }
+
         ////TEACHER////
         $scope.isAddedTeacher = true;//each Teacher checbox value
         //pre-load added//

@@ -99,6 +99,7 @@
             if ($scope.skillNameData.indexOf($scope.updateModal.SkillName.toLowerCase()) > -1 &&
                 $scope.skillNameData.indexOf($scope.updateModal.SkillName.toLowerCase()) != $scope.updateModal.index ) {
                 alert("Tên kĩ năng đã có");
+                $scope.updateModal.SkillName = '';
                 return;
             }
             var skill = {
@@ -129,14 +130,7 @@
                 alert('Lỗi getAPI');
             });
         }
-        var checkToken = localStorageService.get("TokenInfo");
-        $scope.UserLevel = localStorageService.get("UserLevel");
-        if (checkToken && $scope.UserLevel == 1) {
-            getData();
-        }
-        else {
-            window.location.href = 'http://localhost:2697/#!/login'
-        }
+        getData();
 
     }
 })(angular.module('ocms.skill'));

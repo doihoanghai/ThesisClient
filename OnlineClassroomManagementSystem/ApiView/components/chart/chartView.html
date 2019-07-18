@@ -1,0 +1,44 @@
+﻿<head>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- /.box -->
+            <div class="box">
+                <div class="box-header">
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+                    <div>
+                        Khóa học
+                        <!--<select id="courseSelect"  ng-options="item.CourseID as item.CourseID for item in $scope.courseData track by item.CourseID">
+        <option ng-change="selectCourse()" ng-model="Selected.Course" value={{item.CourseID}} ng-repeat="item in courseData track by $index">{{item.CourseName}}</option>
+
+    </select>-->
+                        <select ng-options="item as item.CourseName for item in courseData" ng-model="Selected" ng-change="selectCourse()" />
+                        Lớp học
+                        <select>
+                            <option value={{$index}} ng-repeat="item in classData track by $index">{{item.ClassName}}</option>
+                        </select>
+                        <input type="submit" value="Xem">
+                    </div>
+                    <br />
+                    <div id="chartScore" style="height: 300px; width: 100%;">
+                    </div>
+                    <br />
+                    <div id="chartSkill" style="height: 300px; width: 100%;">
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->

@@ -9,7 +9,10 @@
             url: "/teacher",
             templateUrl: "/ApiView/components/teacher/teacherView.html",
             parent: 'base',
-            controller: "teacherController"
+            controller: "teacherController",
+            params: {
+                exerciseID: null,
+            }
         });
     }
 })();

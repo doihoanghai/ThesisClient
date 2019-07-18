@@ -34,16 +34,19 @@
         }
 
         this.setHeader = function () {
-            delete $http.defaults.headers.common['X-Requested-With'];
-             
-            if ((authData.authenticationData != undefined) || (authData.authenticationData.accessToken != undefined) || (authData.authenticationData.accessToken != null) || (authData.authenticationData.accessToken != "")) {
-                $http.defaults.headers.common['Authorization'] = 'JWT ' + authData.authenticationData.accessToken;
-                $http.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+            if ($http.defaults.headers.common['Authorization'] == null || $http.defaults.headers.common['Authorization'] == undefined) {
+                delete $http.defaults.headers.common['X-Requested-With'];
+
+                if ((authData.authenticationData != undefined) && (authData.authenticationData.accessToken != undefined) || (authData.authenticationData.accessToken != null) || (authData.authenticationData.accessToken != "")) {
+                    $http.defaults.headers.common['Authorization'] = 'JWT ' + authData.authenticationData.accessToken;
+                    $http.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+                }
+                else {
+                    $http.defaults.headers.common['Authorization'] = null;
+                    $http.defaults.headers.common['Content-Type'] = null;
+                }
             }
-            else {
-                $http.defaults.headers.common['Authorization'] = null;
-                $http.defaults.headers.common['Content-Type'] = null;
-            }
+            
         }
 
         this.validateRequest = function () {

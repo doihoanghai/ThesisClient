@@ -4,6 +4,17 @@ var sql = require('../../db');
 
 module.exports = {
 
+    getOwnAnswer: (req, res) => {
+        const request = new sql.Request()
+            .input('QuestionID', sql.NChar, req.params.QuestionID)
+            .input('StudentID', sql.NChar, req.user._id)
+            .query('SELECT * FROM Student_Answer WHERE StudentID = @StudentID AND QuestionID = @QuestionID', (err, result) => {
+                if (err)
+                    res.json({ message: 'Wrong Request or Internal Server Erro !' });
+                res.end(JSON.stringify(result.recordsets));
+            });
+    },
+
     getExerciseAnswer: (req, res) => {
         //Check authentication of Teacher to get this data
         const request = new sql.Request()

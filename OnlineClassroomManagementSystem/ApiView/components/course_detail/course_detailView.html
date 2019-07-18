@@ -8,6 +8,65 @@
                     <h2 id="title" style="font-weight:500;text-align:center">Quản lý chi tiết khóa học</h2>
                 </div>
                 <div class="box-body">
+                    <!-- ADD CLASS MODAL-->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm lớp học</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label"><b>Tên lớp học</b></label>
+                                            <input type="text" placeholder="Nhập tên lớp học" ng-model="addModal.ClassName" class="form-control" id="recipient-name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message-text" class="col-form-label"><b>Số lượng học sinh</b></label>
+                                            <input type="number" placeholder="Nhập số lượng học sinh" ng-model="addModal.NumOfStudent" class="form-control" id="message-text">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button ng-click="addClass()" class="btn" data-dismiss="modal">Thêm</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- EDIT CLASS MODAL-->
+                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Cập nhật lớp học</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label"><b>Tên lớp học</b></label>
+                                            <input type="text" placeholder="Nhập tên hạng mục" ng-model="updateModal.ClassName" class="form-control" id="recipient-name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message-text" class="col-form-label"><b>Số lượng học sinh</b></label>
+                                            <input type="number" placeholder="Nhập mô tả hạng mục" ng-model="updateModal.NumOfStudent" class="form-control" id="message-text">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button ng-click="updateClass(updateModal)" class="btn" data-dismiss="modal">Cập nhật</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="exTab3">
                         <ul class="nav nav-tabs">
                             <li class="active">
@@ -102,17 +161,17 @@
 
 
                                             <td>
-                                                <input class="form-control w3-input"  type="number" placeholder="Nhập thời gian làm bài" style="width:100%!important" ng-model="addModal.ExerciseTime">
+                                                <input class="form-control w3-input" type="number" placeholder="Nhập thời gian làm bài" style="width:100%!important" ng-model="addModal.ExerciseTime">
                                             </td>
 
 
                                             <td>
-                                                <input class="form-control w3-input"  type="number" placeholder="Nhập điểm số" style="width:100%!important" ng-model="addModal.ExerciseScore">
+                                                <input class="form-control w3-input" type="number" placeholder="Nhập điểm số" style="width:100%!important" ng-model="addModal.ExerciseScore">
                                             </td>
 
 
                                             <td>
-                                                <input class="form-control w3-input"  type="file" placeholder="Nhập đường dẫn" style="width:100%!important" ng-model="addModal.ExercisePath">
+                                                <input class="form-control w3-input" type="file" placeholder="Nhập đường dẫn" style="width:100%!important" ng-model="addModal.ExercisePath">
                                             </td>
 
 
@@ -170,82 +229,15 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <div class="tab-pane" id="CourseTeacher">
-                                <h4>Xem theo:</h4>
-                                <input class="teacher" type="radio" name="add" value="added"> Đã thêm vào khóa học<br>
-                                <input class="teacher" type="radio" name="add" value="not_added"> Chưa thêm vào khóa học<br>
-                                <br />
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Họ tên</th>
-                                            <th>Địa chỉ</th>
-                                            <th>Ngày sinh</th>
-                                            <th>Email</th>
-                                            <th>Tên đăng nhập</th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-
-                                            <td>
-                                                <input class="form-control w3-input" placeholder="Nhập họ tên" style="width:100%!important" ng-model="addModal.FullName">
-                                            </td>
-
-                                            <td>
-                                                <input class="form-control w3-input" placeholder="Nhập địa chỉ" style="width:100%!important" ng-model="addModal.Address">
-                                            </td>
-
-                                            <td>
-                                                <input class="form-control w3-input" placeholder="Nhập ngày sinh" style="width:100%!important" ng-model="addModal.BirthDay">
-                                            </td>
-
-                                            <td>
-                                                <input class="form-control w3-input" placeholder="Nhập email" style="width:100%!important" ng-model="addModal.Email">
-                                            </td>
-
-                                            <td>
-                                                <input class="form-control w3-input" placeholder="Nhập vai trò" style="width:100%!important" ng-model="addModal.Role">
-                                            </td>
-
-                                            <!--<td style="width:10%;text-align:center">
-                                <button ng-click="addExercise()" class="btn btn-sm btn-circle btn-success"><i class="fa fa-plus"></i> </button>
-                            </td>-->
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="item in teacherData track by $index">
-
-                                            <td>
-                                                <div>{{item.FullName}}</div>
-                                            </td>
-                                            <td>
-                                                <div>{{item.Address}}</div>
-                                            <td>
-                                                <div>{{item.BirthDay}}</div>
-                                            </td>
-                                            <td>
-                                                <div>{{item.Email}}</div>
-                                            </td>
-                                            <td>
-                                                <div>{{item.Role}}</div>
-                                            </td>
-                                            <td style="width:10%;text-align:center">
-                                                <div ng-hide="isAddedTeacher"><input id="cbTeacher" type="checkbox" ng-click="cbTeacherClicked($index)" /></div>
-                                                <div ng-show="isAddedTeacher"><input id="cbTeacher" type="checkbox" ng-click="cbTeacherClicked($index)" checked /></div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Họ tên</th>
-                                            <th>Địa chỉ</th>
-                                            <th>Ngày sinh</th>
-                                            <th>Email</th>
-                                            <th>Vai trò</th>
-                                            <th></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                            <div class="tab-pane" id="CourseTeacher" >
+                                <div class="col-sm-offset-1">
+                                    <br />
+                                    <h4 ><b>Họ tên: </b>{{teacherInfo.Name}}</h4>
+                                    <h4 ><b>Điện thoại: </b>{{teacherInfo.Phone}}</h4>
+                                    <h4 ><b>Địa chỉ: </b>{{teacherInfo.Address}}</h4>
+                                    <h4 ><b>Email: </b>{{teacherInfo.Email}}</h4>
+                                    <br />
+                                </div>
                             </div>
                             <div class="tab-pane" id="CourseClass">
 
@@ -254,24 +246,25 @@
                                         <tr>
                                             <th ng-click="orderByMe('ClassName')">Tên lớp</th>
                                             <th ng-click="orderByMe('NumOfStudent')">Số lượng học sinh</th>
+                                            <th ng-click="orderByMe('NumOfStudent')">Mã lớp</th>
                                             <th></th>
                                         </tr>
                                         <tr>
 
                                             <td>
-                                                <input class="form-control w3-input" placeholder="Nhập tên lớp" style="width:100%!important" ng-model="addModal.ClassName">
+                                                <input class="form-control w3-input" placeholder="Nhập tên lớp" style="width:100%!important" ng-model="filterModal.ClassName">
                                             </td>
 
                                             <td>
-                                                <input class="form-control w3-input" type="number" placeholder="Nhập số lượng học sinh" style="width:100%!important" ng-model="addModal.NumOfStudent">
+                                                <input class="form-control w3-input" type="number" placeholder="Nhập số lượng học sinh" style="width:100%!important" ng-model="filterModal.NumOfStudent">
                                             </td>
                                             <td style="width:10%;text-align:center">
-                                                <button class="btn btn-sm btn-circle btn-success" ng-click="addClass()"><i class="fa fa-plus"></i> </button>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="filterModal"> Thêm</button>
                                             </td>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="item in classData | filter:addModal | orderBy:myOrderBy track by $index">
+                                        <tr ng-repeat="item in classData | filter:filterModal | orderBy:myOrderBy track by $index">
 
                                             <td>
                                                 <div ng-hide="ClassItem[$index]"><a ui-sref="clickClass({classID:item.ClassID,className:item.ClassName, clickItem: item})">{{item.ClassName}}</a></div>
@@ -281,8 +274,12 @@
                                                 <div ng-hide="ClassItem[$index]">{{item.NumOfStudent}}</div>
                                                 <div ng-show="ClassItem[$index]"><input style="width:100%!important" type="number" ng-model="item.NumOfStudent" /></div>
                                             </td>
+                                            <td>
+                                                <div ng-hide="ClassItem[$index]">{{item.Code}}</div>
+                                                <div ng-show="ClassItem[$index]"><input style="width:100%!important" type="number" ng-model="item.NumOfStudent" /></div>
+                                            </td>
                                             <td style="width:10%;text-align:center">
-                                                <button ng-hide="ClassItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="editClass($index)"><i class="fa fa-pencil"></i> </button>
+                                                <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" data-toggle="modal" data-target="#editModal" ng-click="editClass($index, item)"><i class="fa fa-pencil"></i> </button>                                    <button ng-show="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="updateCategory($index,item)">OK </button>
                                                 <button ng-show="ClassItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="updateClass($index,item)">OK </button>
                                                 <button class="btn btn-sm btn-circle btn-danger" ng-click="removeClass($index)"><i class="fa fa-trash"></i> </button>
                                             </td>
@@ -293,6 +290,7 @@
                                         <tr>
                                             <th>Tên lớp</th>
                                             <th>Số lượng học sinh</th>
+                                            <th>Mã lớp</th>
                                             <th></th>
                                         </tr>
                                     </tfoot>

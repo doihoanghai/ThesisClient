@@ -14,6 +14,9 @@
                     </select>
                     <!-- SHOW BUTTON  -->
                     <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="showQuestion()"> Xem tất cả </button>
+                    
+                    <!-- GRADE BUTTON  -->
+                    <button class="btn btn-sm btn-circle btn-success" ui-sref="teacher_exercise({exerciseData: exID, exerciseID: question.ExerciseID })"> Chấm điểm </button>
 
                     <!-- DELETE BUTTON  -->
                     <button style="float:right;margin:2px" ng-show="showSingle == true" class="btn btn-sm btn-circle btn-danger" ng-click="removeQuestion(qIndex)"><i class="fa fa-trash"></i> </button>
@@ -245,7 +248,7 @@
 
                             <br />
                         </div>
-                        <div ng-if="question2.QuestionType==1" class="box-body" ng-repeat="answer2 in answerData2 track by $index " on-finish-render="ngRepeatFinished" >
+                        <div ng-if="question2.QuestionType==1" class="box-body" ng-repeat="answer2 in answerData2 track by $index " on-finish-render="ngRepeatFinished">
                             <input ng-if="question2.AnswerID==answer2.AnswerID" ng-click="chooseAnswer(question2,answer2)" class="dapan" type="radio" name="answer" value={{$index}} checked>
                             <input ng-if="question2.AnswerID!==answer2.AnswerID" ng-click="chooseAnswer(question2,answer2)" class="dapan" type="radio" name="answer" value={{$index}}> {{answer2.AnswerContent}}
                             <!-- DELETE BUTTON  -->
@@ -268,7 +271,7 @@
                         <button style="float:right;width:10%;" type="button" class="btn btn-primary" ng-click="addAnswer(CurQuestion)"> Thêm</button>
                     </div>
                     <div id="tracnghiem" class="box-header" ng-repeat="answer in answerData track by $index" on-finish-render="ngRepeatFinished" >
-                        <input style="float:left;display:inline-block" ng-click="chooseAnswer(curDataFilter[CurQuestion],answer)" ng-model="ChoiceModal" class="dapan" type="radio" name="answer" id="answer{{$index}}"> <p id="{{answer.AnswerID}}">{{answer.AnswerContent}}</p>
+                        <input style="float:left;display:inline-block" ng-click="chooseAnswer(curDataFilter[CurQuestion],answer)" ng-model="ChoiceModal" class="dapan" type="radio" name="answer" id="answer + {{$index}}"> <p id="{{answer.AnswerID}}">{{answer.AnswerContent}}</p>
                         <!--<div ng-if="$last" ng-init="val()"></div>-->
                         <!-- DELETE BUTTON  -->
                         <button style="float:right;margin:2px;display:inline-block" class="btn btn-sm btn-circle btn-danger" ng-click="removeAnswer(answer, $index)"><i class="fa fa-trash"></i> </button>

@@ -142,28 +142,15 @@
         ///////////////////////
         //// COURSE TEACHER ///
         ///////////////////////
-        $scope.isAddedTeacher;//each skill checbox value
-        $(".teacher").change(function () {
-
-            var val = $('.teacher:checked').val();//view by
-            if (val == 'added') {
-                $scope.isAddedTeacher = true;//get checked list
-                apiService.get('CourseTeacher/' + courseID, null, function (result) {
-                    $scope.teacherData = [];
-
-                    result.data[0].forEach(function (element) {
-                        $scope.teacherData.push(element);
-                    });
-                }, function (erro) {
-                    alert('Lỗi getAPI');
-                });
-            }
-            if (val == 'not_added') {
-                $scope.isAddedSkill = false;//get unchecked list
-                $scope.teacherData = [];
-            }
-        }
-        );
+        $scope.teacherInfo = {};
+        apiService.get('CourseTeacher/' + courseID, null, function (result) {
+            $scope.teacherInfo.Name = result.data[0][0].FullName;
+            $scope.teacherInfo.Phone = result.data[0][0].PhoneNumber;
+            $scope.teacherInfo.Address = result.data[0][0].Address;
+            $scope.teacherInfo.Email = result.data[0][0].Email;
+        }, function (erro) {
+            alert('Lỗi getAPI');
+        });
 
         //////////////////////
         //// COURSE CLASS ///
@@ -171,20 +158,29 @@
         function getClass() {
             apiService.get('Course_Class/' + courseID, null, function (result) {
                 $scope.classData = [];
+                $scope.classNameData = [];
 
                 result.data[0].forEach(function (element) {
                     $scope.classData.push(element);
+                    $scope.classNameData.push(element.ClassName.toLowerCase());
+
                 });
             }, function (erro) {
                 alert('Lỗi getAPI');
             });
         }
         getClass();
-
+        $scope.addModal = {}
+        $scope.updateModal = {}
         //ADD
         $scope.addClass = function () {
             if (!$scope.addModal.ClassName) {
                 alert("Tên lớp học còn thiếu");
+                return;
+            }
+            if ($scope.classNameData.indexOf($scope.addModal.ClassName.toLowerCase()) > -1) {
+                alert("Tên lớp học đã có");
+                $scope.addModal.ClassName = '';
                 return;
             }
             if (!$scope.addModal.NumOfStudent) {
@@ -223,20 +219,30 @@
         }
         //EDIT
         $scope.ClassItem = [];
-        $scope.editClass = function (index) {
-            $scope.ClassItem[index] = true;
+        $scope.editClass = function (index, item) {
+            $scope.updateModal.ClassID = item.ClassID;
+            $scope.updateModal.ClassName = item.ClassName;
+            $scope.updateModal.NumOfStudent = item.NumOfStudent;
+            $scope.updateModal.CourseID = courseID;
+            $scope.index = index;
         }
-        $scope.updateClass = function (index, edt) {
+        //UPDATE
+        $scope.updateClass = function () {
+            if ($scope.classNameData.indexOf($scope.updateModal.ClassName.toLowerCase()) > -1 &&
+                $scope.classNameData.indexOf($scope.updateModal.ClassName.toLowerCase()) != $scope.index) {
+                alert("Tên lớp học đã có");
+                return;
+            }
             
-            if (edt.NumOfStudent < 0) {
+            if ($scope.updateModal.NumOfStudent < 0) {
                 alert("Số lượng học sinh phải >=0");
                 return
             }
-            apiService.put('Class/' + edt.ClassID, edt, function (result) {
-                $scope.classData[index].ClassID = edt.ClassID;
-                $scope.classData[index].ClassName = edt.ClassName;
-                $scope.classData[index].NumOfStudent = edt.NumOfStudent;
-                $scope.ClassItem[index] = false;
+            apiService.put('Class/' + $scope.updateModal.ClassID, $scope.updateModal, function (result) {
+                $scope.classData[$scope.index].ClassID = $scope.updateModal.ClassID;
+                $scope.classData[$scope.index].ClassName = $scope.updateModal.ClassName;
+                $scope.classData[$scope.index].NumOfStudent = $scope.updateModal.NumOfStudent;
+                $scope.ClassItem[$scope.index] = false;
             }, function (erro) {
                 alert('Lỗi putAPI');
             });
@@ -291,6 +297,7 @@
                 $scope.addModal.ExercisePath = '';
             }
             var exercise = {
+                "CourseID": courseID,
                 "ExerciseID": $scope.addModal.ExerciseID,
                 "ExerciseName": $scope.addModal.ExerciseName,
                 "Description": $scope.addModal.Description,

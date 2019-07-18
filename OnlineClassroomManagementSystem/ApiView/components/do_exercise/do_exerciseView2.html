@@ -365,23 +365,33 @@
 
 </style>
 <div >
-    
     <div class="row">
+        <div class="col-lg-2 col-lg-offset-4" style="text-align:center">
+           </div>
+        
+    </div>
+    <div class="row">
+        
         <br><br>
         <div class="col-sm-6 col-sm-offset-2">
+            <div  style="margin-left:30%;width:fit-content!important;">
+                <h1 style="color:black;background-color:#e2f2ff;border: 5px solid #3c8dbc;border-radius:10px"><i class="fa fa-clock-o" style="margin-right:10px;"></i><span id="hours"></span><span id="minutes"></span><span id="seconds"></span>
+                <button ng-click="endExercise()" class=" btn btn-md btn-primary btn-block">Hoàn thành</button></h1>
+                <br />
+            </div>
+            <div class="question" style="text-align:center;">
+                
+                <h3>
+                    <span class="label label-warning" id="socau"></span>
+                    <span id="debai"></span>
+                </h3>
+            </div>
             <div class="loader">
                 <div id="quiz">
-
-                    <div class="question" style="text-align:center;">
-                        <h3>
-                            <span class="label label-warning" id="socau" ></span>
-                            <span id="debai"></span>
-                        </h3>
-                    </div>                        
-                    <textarea ng-show="curQuestType == 2" style="text-align:center;width :100%;font-size:x-large;" placeholder="Nhập câu trả lời" rows="10" ng-model="addModal.AnswerContent" ></textarea>
+                    <textarea ng-show="curQuestType == 2" style="text-align:center;width :100%;font-size:x-large;" placeholder="Nhập câu trả lời" rows="10" ng-model="addModal.AnswerContent"></textarea>
                     <ul ng-repeat="answer in answerData track by $index" on-finish-render="ngRepeatFinished">
                         <li style="width:109%;">
-                            <input type="radio" id="answer{{$index}}" name="selector" value="1">
+                            <input type="radio" id="{{answer.AnswerID}}" name="selector" value="1">
                             <label for="f-option" class="element-animation" ng-click="chooseAnswer(curDataFilter[currentIndex],answer)">{{answer.AnswerContent}}</label>
                             <div class="check"></div>
                         </li>
@@ -396,9 +406,14 @@
 
         </div>
 
-        <div class="col-sm-4 " style="width:30%;column-count:3;height:auto;">
-            <div data-toggle="buttons" ng-repeat="item in curDataFilter track by $index" >
-                <label ng-click="clickQuestion($index)" class=" btn btn-md btn-primary btn-block"><input type="radio" name="q_answer" value="1">Câu {{$index+1}}</label>
+        <div class="col-sm-2 " style="height:100%;">
+            <div data-toggle="buttons" ng-repeat="item in curDataFilter track by $index" style="display:block;margin:5px;">
+                <label ng-if="$index%2 == 0" ng-click="clickQuestion($index)" class=" btn btn-md btn-primary btn-block"><input type="radio" name="q_answer" value="1">Câu {{$index+1}}</label>
+            </div>
+        </div>
+        <div class="col-sm-2 " style="height:100%;">
+            <div data-toggle="buttons" ng-repeat="item in curDataFilter track by $index" style="display:block;margin:5px;">
+                <label ng-if="$index%2 == 1" ng-click="clickQuestion($index)" class=" btn btn-md btn-primary btn-block"><input type="radio" name="q_answer" value="1">Câu {{$index+1}}</label>
             </div>
         </div>
     </div>

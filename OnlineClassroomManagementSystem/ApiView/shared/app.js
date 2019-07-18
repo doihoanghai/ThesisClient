@@ -16,7 +16,10 @@
             'ocms.student_class', ,
             'ocms.student_exercise',
             'ocms.do_exercise',
-            'ocms.teacher'
+            'ocms.teacher',
+            'ocms.teacher_exercise',
+            'ocms.chart',
+            'ocms.chart_detail'
         ]
         )
         .config(config)

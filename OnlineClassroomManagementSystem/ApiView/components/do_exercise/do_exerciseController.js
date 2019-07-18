@@ -16,6 +16,7 @@
         $scope.answerData = {};
         $scope.answerData2 = {};
         $scope.showSingle = true;
+
         //Answer//
         //Load Answer Each
         $scope.val = function () {
@@ -26,6 +27,7 @@
         $scope.getAnswer = function (index) {
             //GET ANSWER EACH
             $scope.answerData = [];
+            //GET QUESTION ANSWER
             apiService.get('Answer/' + $scope.curDataFilter[index].QuestionID, null, function (result) {
                 //$scope.qIndex = $scope.curDataFilter[$scope.qIndex].QuestionID;
                 $scope.listLength = $scope.curDataFilter.length - 1;
@@ -36,7 +38,8 @@
             }, function (erro) {
                 alert('Lỗi getAPI');
                 });
-            apiService.get('StudentAnswer/' + $scope.curDataFilter[index].QuestionID, null, function (result) {
+            //GET STUDENT ANSWER
+            apiService.get('StudentAnswer/getOwnAnswer/' + $scope.curDataFilter[index].QuestionID, null, function (result) {
                 //$scope.qIndex = $scope.curDataFilter[$scope.qIndex].QuestionID;
                 //$scope.listLength = $scope.curDataFilter.length - 1;
                 result.data[0].forEach(function (element) {
@@ -44,6 +47,7 @@
                     if ($scope.curDataFilter[index].QuestionType == 1) {
                         $scope.chosen = element.AnswerID;
                     }
+                    $('#' + element.AnswerID).prop('checked', true);
                 });
 
             }, function (erro) {
@@ -124,8 +128,8 @@
                 "ExerciseID": $state.params.exerciseID,
             }
             apiService.put('StudentAnswer/' + question.QuestionID, dapan, function () {
-                alert('Câu trả lời ' + answer.AnswerContent + ' đã được chọn là đáp án');
-                answer.AnswerContent = '';
+                
+                $('#' + answer.AnswerID).prop('checked', true);
             }, function (erro) {
                 alert('Lỗi postAPI');
             });
@@ -137,7 +141,7 @@
             $scope.curQuestType = $scope.curDataFilter[index].QuestionType;
             document.getElementById('debai').innerHTML = $scope.curDataFilter[index].QuestionContent;
             $scope.getAnswer(index);
-            apiService.get('StudentAnswer/' + $scope.curDataFilter[index].QuestionID, null, function (result) {
+            apiService.get('StudentAnswer/getOwnAnswer/' + $scope.curDataFilter[index].QuestionID, null, function (result) {
                 //$scope.qIndex = $scope.curDataFilter[$scope.qIndex].QuestionID;
                 //$scope.listLength = $scope.curDataFilter.length - 1;
                 result.data[0].forEach(function (element) {
@@ -166,6 +170,21 @@
         }
         //Back Next Button
         $scope.clickBackNext = function (event) {
+            if ($scope.questionData[$scope.currentIndex].QuestionType == 2) {
+                var dapan = {
+                    "AnswerContent": $scope.addModal.AnswerContent,
+                    "QuestionType": $scope.questionData[$scope.currentIndex].QuestionType,
+                    "QuestionTime": $scope.questionData[$scope.currentIndex].QuestionTime,
+                    "Score": $scope.questionData[$scope.currentIndex].Score,
+                    "AnswerID": '',
+                    "ExerciseID": $state.params.exerciseID,
+                }
+                apiService.put('StudentAnswer/' + $scope.questionData[$scope.currentIndex].QuestionID, dapan, function () {
+                    $scope.addModal.AnswerContent = '';
+                }, function (erro) {
+                    alert('Lỗi postAPI');
+                });
+            }
             if (event.currentTarget.value == 'next') {
                 $scope.currentIndex += 1;
                 document.getElementById('socau').innerHTML = $scope.currentIndex + 1;
@@ -180,6 +199,44 @@
                 $scope.curQuestType = $scope.curDataFilter[$scope.currentIndex].QuestionType;
                 $scope.getAnswer($scope.currentIndex);
             }
+        }
+        $scope.endExercise = function () {
+            apiService.get('StudentExercise/end/' + $state.params.exerciseID, null, function (result) {},
+                function (erro) {
+                    alert('Lỗi endExercise');
+                    return;
+                });
+        }
+        function timer() {
+            var m = 1;
+            var date = new Date();
+            const second = 1000,
+                minute = second * 60,
+                hour = minute * 60,
+                day = hour * 24;
+
+            let countDown = new Date(date.getTime() + m * 60000).getTime(),
+                x = setInterval(function () {
+
+                    let now = new Date().getTime(),
+                        distance = countDown - now;
+
+                    document.getElementById('hours').innerText =' < ' + Math.floor((distance % (day)) / (hour)) + ":",
+                        document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute)) + ":",
+                        document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second) + ' > ';
+                    if (distance < 0) {
+                        clearInterval(x);
+                        alert('Hết giờ làm bài');
+                        $scope.endExercise();
+                        $location.path('/student_class');
+                    }
+                    //do something later when date is reached
+                    //if (distance < 0) {
+                    //  clearInterval(x);
+                    //  'IT'S MY BIRTHDAY!;
+                    //}
+
+                }, second)
         }
         function getData() {
             //GET QUESTION
@@ -210,16 +267,18 @@
                 alert('Lỗi getAPI');
                 });
 
-            apiService.get('StudentExercise/start/' + $state.params.exerciseID, null, function (result) {
 
-            }, function (erro) {
-                alert('Lỗi getAPI');
-            });
+            apiService.get('StudentExercise/start/' + $state.params.exerciseID, null, function (result) { },
+                function (erro) {
+                    alert('Lỗi startExercise');
+                    return;
+                });
         }
         var checkToken = localStorageService.get("TokenInfo");
         $scope.UserLevel = localStorageService.get("UserLevel");
         if (checkToken && $scope.UserLevel==2) {
             getData();
+            timer();
         }
         else {
             window.location.href = 'http://localhost:2697/#!/login'

@@ -1,7 +1,7 @@
 ﻿<!-- Main content -->
 <section class="content">
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-13 col-sm-offset-1">
             <!-- /.box -->
             <div class="box">
                 <div class="box-header">
@@ -16,8 +16,49 @@
                             <li>
                                 <a data-target="#ClassStudent" data-toggle="tab">Học sinh</a>
                             </li>
+                            <li>
+                                <a data-target="#ClassExercise" data-toggle="tab">Bài tập</a>
+                            </li>
                         </ul>
 
+                        <!-- ADD EXERCISE MODAL -->
+                        <div class="modal fade" id="exerciseModal" tabindex="-1" role="dialog" aria-labelledby="exerciseModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exerciseModalLabel">Thêm bài tập</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="col-form-label"><b>Tên bài tập</b></label>
+                                                <input class="form-control" placeholder="Nhập tên bài tập " style="width:100%!important" ng-model="studentAddModal.StudentFullName">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="col-form-label"><b>Mô tả bài tập</b></label>
+                                                <textarea class="form-control" placeholder="Nhập mô tả bài tập " style="width:100%!important" ng-model="studentAddModal.StudentAddress"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="col-form-label"><b>Thời gian làm bài</b></label>
+                                                <input type="number" class="form-control" placeholder="Nhập thời gian làm bài" style="width:100%!important" ng-model="studentAddModal.StudentBirthday">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="col-form-label"><b>Ghi chú</b></label>
+                                                <input class="form-control" placeholder="Nhập ghi chú" style="width:100%!important" ng-model="studentAddModal.StudentEmail">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button ng-click="createStudent()" class="btn" data-dismiss="modal">Thêm</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ADD STUDENT MODAL -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -63,6 +104,7 @@
                             </div>
                         </div>
                         <div class="tab-content">
+                            <!-- TEACHER -->
                             <div class="tab-pane active" id="ClassTeacher">
                                 <h4>Xem theo:</h4>
                                 <input class="teacher" type="radio" name="add" value="added" checked> Đã thêm vào khóa học<br>
@@ -81,25 +123,25 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <input class="form-control w3-input" placeholder="Nhập họ tên " style="width:100%!important" ng-model="addModal.TeacherFullName">
+                                                <input class="form-control w3-input" placeholder="Nhập họ tên " style="width:100%!important" ng-model="filterModal.TeacherFullName">
                                             </td>
 
                                             <td>
-                                                <input class="form-control w3-input" placeholder="Nhập địa chỉ " style="width:100%!important" ng-model="addModal.TeacherAddress">
+                                                <input class="form-control w3-input" placeholder="Nhập địa chỉ " style="width:100%!important" ng-model="filterModal.TeacherAddress">
                                             </td>
                                             <td>
-                                                <input class="form-control w3-input" placeholder="Nhập ngày sinh" style="width:100%!important" ng-model="addModal.TeacherBirthday">
-                                            </td>
-
-                                            <td>
-                                                <input class="form-control w3-input" placeholder="Nhập email" style="width:100%!important" ng-model="addModal.TeacherEmail">
-                                            </td>
-                                            <td>
-                                                <input class="form-control w3-input" placeholder="Nhập số điện thoại" style="width:100%!important" ng-model="addModal.TeacherPhoneNumber">
+                                                <input class="form-control w3-input" placeholder="Nhập ngày sinh" style="width:100%!important" ng-model="filterModal.TeacherBirthday">
                                             </td>
 
                                             <td>
-                                                <input class="form-control w3-input" placeholder="Nhập tên đăng nhập" style="width:100%!important" ng-model="addModal.TeacherUserName">
+                                                <input class="form-control w3-input" placeholder="Nhập email" style="width:100%!important" ng-model="filterModal.TeacherEmail">
+                                            </td>
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập số điện thoại" style="width:100%!important" ng-model="filterModal.TeacherPhoneNumber">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập tên đăng nhập" style="width:100%!important" ng-model="filterModal.TeacherUserName">
                                             </td>
 
                                             <td style="width:10%;text-align:center"></td>
@@ -107,7 +149,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="item in teacherData | filter:addModal | orderBy:myOrderBy track by $index">
+                                        <tr ng-repeat="item in teacherData | filter:filterModal | orderBy:myOrderBy track by $index">
 
                                             <td>
                                                 <div>{{item.FullName}}</div>
@@ -149,6 +191,7 @@
                                     </tfoot>
                                 </table>
                             </div>
+                            <!-- STUDENT -->
                             <div class="tab-pane" id="ClassStudent">
                                 <h4>Xem theo:</h4>
                                 <input class="student" type="radio" name="add" value="added" checked> Đã thêm vào khóa học<br>
@@ -239,6 +282,79 @@
                                     </tfoot>
                                 </table>
                             </div>
+                            <!-- EXERCISE -->
+                            <div class="tab-pane" id="ClassExercise">
+
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th ng-click="orderByMe('ExerciseName')">Tên bài tập</th>
+                                            <th ng-click="orderByMe('Description')">Mô tả bài tập</th>
+                                            <th ng-click="orderByMe('ExerciseTime')">Thời gian làm bài</th>
+                                            <th ng-click="orderByMe('Note')">Ghi chú</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập tên bài tập" style="width:100%!important" ng-model="filterModal.ExerciseName">
+                                            </td>
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập mô tả bài tập" style="width:100%!important" ng-model="filterModal.Description">
+                                            </td>
+
+
+                                            <td>
+                                                <input class="form-control w3-input" type="number" placeholder="Nhập thời gian làm bài" style="width:100%!important" ng-model="filterModal.ExerciseTime">
+                                            </td>
+
+
+                                            <td>
+                                                <input class="form-control w3-input" placeholder="Nhập ghi chú" style="width:100%!important" ng-model="filterModal.Note">
+                                            </td>
+
+                                            <td style="width:10%;text-align:center">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exerciseModal" data-whatever="addModal"> Thêm</button>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="item in exerciseData | filter:filterModal | orderBy:myOrderBy track by $index">
+
+                                        <td>
+                                            <div ng-hide="editItem[$index]"><a ui-sref="clickExercise({exerciseID:item.ExerciseID, clickItem: item})">{{item.ExerciseName}}</a></div>
+                                            <div ng-show="editItem[$index]"><input style="width:100%!important" type="text" ng-model="item.ExerciseName" /></div>
+                                        </td>
+                                        <td>
+                                            <div ng-hide="editItem[$index]">{{item.Description}}</div>
+                                            <div ng-show="editItem[$index]"><input style="width:100%!important" type="text" ng-model="item.Description" /></div>
+                                        </td>
+                                        <td>
+                                            <div ng-hide="editItem[$index]">{{item.ExerciseTime}}</div>
+                                            <div ng-show="editItem[$index]"><input style="width:100%!important" type="number" ng-model="item.ExerciseTime" /></div>
+                                        </td>
+                                        <td>
+                                            <div ng-hide="editItem[$index]">{{item.Note}}</div>
+                                            <div ng-show="editItem[$index]"><input style="width:100%!important" type="text" ng-model="item.Note" /></div>
+                                        </td>
+                                        <td style="width:10%;text-align:center">
+                                            <button ng-hide="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="editExercise($index)"><i class="fa fa-pencil"></i> </button>
+                                            <button ng-show="editItem[$index]" class="btn btn-sm btn-circle btn-success" ng-click="updateExercise($index,item)">OK </button>
+                                            <button class="btn btn-sm btn-circle btn-danger" ng-click="removeExercise($index)"><i class="fa fa-trash"></i> </button>
+                                        </td>
+                                    </tr>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Tên bài tập</th>
+                                            <th>Mô tả bài tập</th>
+                                            <th>Thời gian làm bài</th>
+                                            <th>Ghi chú</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
                         </div>
                     </div>
                 </div>

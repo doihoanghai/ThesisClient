@@ -50,6 +50,11 @@
                 alert("Tên hạng mục còn thiếu");
                 return;
             }
+            if ($scope.categoryNameData.indexOf($scope.addModal.CategoryName.toLowerCase()) > -1) {
+                alert("Tên kĩ năng đã có");
+                $scope.addModal.CategoryName = '';
+                return;
+            }
             if (!$scope.addModal.Description) {
                 $scope.addModal.Description = '';
             }
@@ -91,6 +96,12 @@
             $scope.index = index;
         }
         $scope.updateCategory = function () {
+            if ($scope.categoryNameData.indexOf($scope.updateModal.CategoryName.toLowerCase()) > -1 &&
+                $scope.categoryNameData.indexOf($scope.updateModal.CategoryName.toLowerCase()) != $scope.index) {
+                alert("Tên hạng mục đã có");
+                $scope.updateModal.CategoryName = '';
+                return;
+            }
             apiService.put('Category/' + $scope.updateModal.CategoryID, $scope.updateModal, function (result) {
                 $scope.curDataFilter[$scope.index].CategoryName = $scope.updateModal.CategoryName;
                 $scope.curDataFilter[$scope.index].Description = $scope.updateModal.Description;
@@ -103,22 +114,17 @@
         function getData() {
             apiService.get('Category', null, function (result) {
                 $scope.curDataFilter = [];
+                $scope.categoryNameData = [];
 
                 result.data[0].forEach(function (element) {
                     $scope.curDataFilter.push(element);
+                    $scope.categoryNameData.push(element.CategoryName.toLowerCase());
                 });
                 $scope.fullData = $scope.curDataFilter;
             }, function (erro) {
 
             });
         }
-        var checkToken = localStorageService.get("TokenInfo");
-        $scope.UserLevel = localStorageService.get("UserLevel");
-        if (checkToken && $scope.UserLevel == 1) {
-            getData();
-        }
-        else {
-            window.location.href = 'http://localhost:2697/#!/login'
-        }
+        getData();
     }
 })(angular.module('ocms.category'));

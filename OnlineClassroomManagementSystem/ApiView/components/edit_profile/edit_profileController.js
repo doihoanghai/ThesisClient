@@ -32,7 +32,17 @@
 
 
     function edit_profileController($state, authData, loginService, $scope, authenticationService, $ngBootbox, apiService, notificationService) {
-
+        $scope.profileData = {};
+        apiService.get('GetProfile', null, function (result) {
+            alert(result.data[0]);
+            $scope.profileData.FullName = result.data[0][0].FullName;
+            $scope.profileData.Address = result.data[0][0].Address;
+            $scope.profileData.BirthDay = result.data[0][0].BirthDay;
+            $scope.profileData.Email = result.data[0][0].Email;
+            $scope.profileData.PhoneNumber = result.data[0][0].PhoneNumber;
+        }, function (erro) {
+            alert('lỗi getApi');
+        });
         $scope.updateProfile = function () {
             if (!$scope.profileData.password0) {
                 alert('Chưa nhập mật khẩu đăng nhập hiện tại');

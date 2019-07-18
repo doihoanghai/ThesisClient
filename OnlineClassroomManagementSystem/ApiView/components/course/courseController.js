@@ -65,15 +65,14 @@
 
             apiService.post('Course', course, function (result) {
                 $scope.curDataFilter.push(course);
-                window.location.reload();
                 //clear search field
                 $scope.addModal.CourseName = null;
                 $scope.addModal.Description = null;
                 $scope.addModal.NumOfStudent = null;
             }, function (erro) {
-                    alert('Lỗi postAPI');
-                });
-            }
+                alert('Lỗi postAPI');
+            });
+        }
         
 
         $scope.removeCourse = function (index) {

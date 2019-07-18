@@ -43,14 +43,13 @@ module.exports = {
     },
     getOwnClass: (req, res) => {
         const request = new sql.Request()
-            .input('StudentID', sql.NChar, req.user._id)
+            .input('StudentID', sql.NVarChar, req.user._id)
             .query('SELECT Class.* FROM Class_Student LEFT JOIN Class on Class_Student.ClassID = Class.ClassID where StudentID = @StudentID', (err, result) => {
                 if (err) {
                     res.json({ message: 'Erro !!!' });
                 }
-                else {
+
                     res.end(JSON.stringify(result.recordsets));
-                }
             });
     },
     activeCode: (req, res) => {
@@ -60,11 +59,16 @@ module.exports = {
                 .input('StudentID', sql.NVarChar, req.user._id)
                 .query('EXEC proc_ActiveCode @StudentID,@Code', (err, result) => {
                     if (err)
-                        res.status(500);
+                        res.json({
+                        message: 'erro'
+                    });
+                    if(result.recordset[0][""] == 1)
                     //check result value
                     res.json({
                         message: 'Join class success'
                     });
+                    else
+                        res.status(400).json({message : 'Class is full of student'});
                 });
         }
         else {

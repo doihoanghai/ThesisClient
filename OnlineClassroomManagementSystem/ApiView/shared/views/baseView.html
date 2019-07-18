@@ -4,9 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <style>
-
         .dropbtn {
             background-color: #518ba5;
             color: white;
@@ -16,10 +15,10 @@
         }
 
         .dropdown {
-            float:right;
+            float: right;
             position: relative;
             display: inline-block;
-            width:10%;
+            width: 10%;
         }
 
         .dropdown-content {
@@ -68,7 +67,6 @@
             font-size: 1.3em;
         }
 
-
             .notification .badge {
                 position: absolute;
                 top: -10px;
@@ -86,6 +84,29 @@
         <h4 style="float:left;color:#e9ebee;font-weight:700;margin-left:10px">
             <i class="fa fa-graduation-cap" aria-hidden="true"></i>OnlineClass
         </h4>
+        <div style="float:left;width:50%;margin-left:15%;">
+            <div ng-if="UserLevel == '2'">
+
+                <div style="float:left;">
+                    <button onclick="window.location.href = 'http://localhost:2697/#!/student_class';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-university fa-2x"> Lớp học  </i></button>
+                </div>
+            </div>
+            <div ng-if="UserLevel == '0'|| UserLevel == '1'">
+
+                <div style="float:left;margin-right:2%;">
+                    <button onclick="window.location.href = 'http://localhost:2697/#!/category';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-list fa-2x"> Hạng mục  </i></button>
+                </div>
+                <div style="float:left;margin-right:2%;">
+                    <button onclick="window.location.href = 'http://localhost:2697/#!/course';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-users fa-2x"> Khóa học  </i></button>
+                </div>
+                <div style="float:left;margin-right:2%;">
+                    <button onclick="window.location.href = 'http://localhost:2697/#!/chart';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-bar-chart fa-2x"> Thống kê </i></button>
+                </div>
+                <div style="float:left;" ng-if="UserLevel == '0'">
+                    <button onclick="window.location.href = 'http://localhost:2697/#!/skill';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-bolt fa-2x"> Kĩ năng </i></button>
+                </div>
+            </div>
+        </div>
         <div class="dropdown">
             <button class="dropbtn"><i style="float:right;margin-right:10px;" class="fa fa-bars fa-2x" aria-hidden="true"></i></button>
             <div class="dropdown-content">
@@ -154,30 +175,7 @@
         <section>
             <!-- Main row -->
 
-            <div class="col-sm-1 " style="margin:1%;">
-                <div ng-if="UserLevel == '2'">
-
-                    <div style="float:left;">
-                        <button onclick="window.location.href = 'http://localhost:2697/#!/student_class';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-university fa-2x"> Lớp học  </i></button>
-                    </div>
-                    <!--<div style="float:left;">
-            <button onclick="window.location.href = 'http://localhost:2697/#!/student_exercise/class37C243C8-1762-4/course0002%20%20%20%20%20%20%20%20%20%20/';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-file-text-o fa-2x"> Bài tập  </i></button>
-        </div>-->
-                </div>
-                <div ng-if="UserLevel == '0'||UserLevel == '1'">
-
-                    <div style="float:left;">
-                        <button onclick="window.location.href = 'http://localhost:2697/#!/category';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-list fa-2x"> Hạng mục  </i></button>
-                    </div>
-                    <div style="float:left;">
-                        <button onclick="window.location.href = 'http://localhost:2697/#!/course';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-users fa-2x"> Khóa học  </i></button>
-                    </div>
-                    <div ng-if="UserLevel == '0'" style="float:left;" >
-                        <button onclick="window.location.href = 'http://localhost:2697/#!/skill';" class="btn btn-sm btn-circle btn-success" style="margin:5%;width:150px;"><i class="fa fa-bolt fa-2x"> Kĩ năng </i></button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-9 col-sm-offset-1 ">
+            <div class="col-sm-10 col-sm-offset-1 ">
                 <div ui-view></div>
             </div>
             <!-- /.row (main row) -->

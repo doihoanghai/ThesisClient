@@ -208,6 +208,12 @@
     <Content Include="ApiView\components\category\categoryController.js" />
     <Content Include="ApiView\components\category\category.module.js" />
     <Content Include="ApiView\components\category\categoryView.html" />
+    <Content Include="ApiView\components\chart_detail\chart_detail.module.js" />
+    <Content Include="ApiView\components\chart_detail\chart_detailController.js" />
+    <Content Include="ApiView\components\chart_detail\chart_detailView.html" />
+    <Content Include="ApiView\components\chart\chartController.js" />
+    <Content Include="ApiView\components\chart\chart.module.js" />
+    <Content Include="ApiView\components\chart\chartView.html" />
     <Content Include="ApiView\components\class_detail\class_detail.module.js" />
     <Content Include="ApiView\components\class_detail\class_detailController.js" />
     <Content Include="ApiView\components\class_detail\class_detailView.html" />
@@ -254,6 +260,9 @@
     <Content Include="ApiView\components\teacher\teacher.module.js" />
     <Content Include="ApiView\components\teacher\teacherController.js" />
     <Content Include="ApiView\components\teacher\teacherView.html" />
+    <Content Include="ApiView\components\teacher_exercise\teacher_exercise.module.js" />
+    <Content Include="ApiView\components\teacher_exercise\teacher_exerciseController.js" />
+    <Content Include="ApiView\components\teacher_exercise\teacher_exerciseView.html" />
     <Content Include="ApiView\shared\app.js" />
     <Content Include="ApiView\shared\directives\pagerDirective.html" />
     <Content Include="ApiView\shared\directives\pagerDirective.js" />

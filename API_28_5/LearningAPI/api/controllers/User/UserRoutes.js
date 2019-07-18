@@ -7,4 +7,6 @@ module.exports = function (app) {
         .get(UserCtrl.getStudent);
     app.route('/Teacher')
         .get(UserCtrl.getTeacher);
+    app.route('/GetProfile')
+    	.get(UserCtrl.getProfile);
 };
