@@ -19,12 +19,11 @@
         <option ng-change="selectCourse()" ng-model="Selected.Course" value={{item.CourseID}} ng-repeat="item in courseData track by $index">{{item.CourseName}}</option>
 
     </select>-->
-                        <select ng-options="item as item.CourseName for item in courseData" ng-model="Selected" ng-change="selectCourse()" />
+                        <select ng-options="item as item.CourseName for item in courseData" ng-model="SelectedCourse" ng-change="selectCourse()" />
                         Lớp học
-                        <select>
-                            <option value={{$index}} ng-repeat="item in classData track by $index">{{item.ClassName}}</option>
-                        </select>
-                        <input type="submit" value="Xem">
+                        <select ng-options="item as item.ClassName for item in classData" ng-model="SelectedClass" ng-change="selectClass()" />
+                        
+                        <button ng-click="showChart()">Xem</button>
                     </div>
                     <br />
                     <div id="chartScore" style="height: 300px; width: 100%;">

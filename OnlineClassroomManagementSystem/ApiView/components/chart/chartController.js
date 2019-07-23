@@ -39,33 +39,37 @@
             result.data[0].forEach(function (element) {
                 $scope.courseData.push(element);
             });
-            $scope.Selected = $scope.courseData[0];
+            $scope.SelectedCourse = $scope.courseData[0];
         }, function (erro) {
             alert('Lỗi get course API');
             });
 
         $scope.selectCourse = function () {
             //get class
-            if ($scope.Selected.CourseID) {
-                apiService.get('Course_Class/' + $scope.Selected.CourseID, null, function (result) {
+            if ($scope.SelectedCourse.CourseID) {
+                apiService.get('Course_Class/' + $scope.SelectedCourse.CourseID, null, function (result) {
                     $scope.classData = [];
 
                     result.data[0].forEach(function (element) {
                         $scope.classData.push(element);
                     });
+                    $scope.SelectedClass = $scope.classData[0];
                     if ($scope.classData.length) {
+                        $scope.classID = $scope.SelectedClass.ClassID;
                     }
                     else {
-                        alert('Khóa học ' + $scope.Selected.CourseName + ' chưa có lớp học');
+                        alert('Khóa học ' + $scope.SelectedCourse.CourseName + ' chưa có lớp học');
                     }
                 }, function (erro) {
                     alert('Lỗi getAPI');
                 });
             }
         }
+        $scope.selectClass = function () {
+            $scope.classID = $scope.SelectedClass.ClassID;
+        }
 
-        window.onload = function () {
-            
+        $scope.showChart = function () {
             var chartScore = new CanvasJS.Chart("chartScore",
                 {
                     title: {
@@ -74,6 +78,8 @@
                     data: [
 
                         {
+                            type: "column",
+                            click: clickChart,
                             dataPoints: [
                                 { x: 1, y: 8, label: "Bài tập cộng" },
                                 { x: 2, y: 3, label: "Bài tập trừ" },
@@ -85,26 +91,10 @@
                 });
 
             chartScore.render();
-            var chartSkill = new CanvasJS.Chart("chartSkill",
-                {
-                    title: {
-                        text: "Kĩ năng"
-                    },
-                    data: [
-
-                        {
-                            dataPoints: [
-                                { x: 1, y: 5, label: "Cộng" },
-                                { x: 2, y: 4, label: "Trừ" },
-                                { x: 3, y: 3, label: "Nhân" },
-                                { x: 4, y: 2, label: "Chia" },
-                            ]
-                        }
-                    ]
-                });
-
-            chartSkill.render();
         }
-
+        function clickChart(e) {
+            window.location.href = 'http://localhost:2697/#!/chart_detail?classID=' + $scope.classID;
+            alert(e.dataPoint.label + " " + $scope.classID);
+        }
     }
 })(angular.module('ocms.chart'));

@@ -1,20 +1,42 @@
-﻿
-<!-- Main content -->
+﻿<!-- Main content -->
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
             <!-- /.box -->
             <div class="box">
                 <div class="box-header">
-                    <h1>Thống kê chi tiết bài tập</h1>
+                    <h1>Thống kê chi tiết lớp Classname</h1>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+                    <h2>Danh sách bài tập</h2>
                     <div>
-                        Lớp học<select ng-options="item as item.CourseName for item in courseData" ng-model="Selected" ng-change="selectCourse()" />
+                        <div class="w3-responsive">
+                            <table class="w3-table w3-hoverable">
+                                <tr class="w3-yellow">
+                                    <th>Tên bài tập</th>
+                                    <th>Mô tả</th>
+                                    <th>Thời gian làm bài(phút)</th>
+                                    <th>Kỹ năng</th>
+                                    <th>Điểm kỹ năng</th>
+                                    <th>Đang xem</th>
+                                </tr>
+                                <tr>
+                                    <td>Cộng cơ bản</td>
+                                    <td>cộng dưới 100</td>
+                                    <td>15</td>
+                                    <td>Toán cộng</td>
+                                    <td>0.5</td>
+                                    <td><input type="radio" /></td>
 
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-                    <div id="piechart"></div>
+
+                    <h1 style="text-align:center">Thống kê chi tiết bài tập cộng</h1>
+                    <div id="piechart" class="col-sm-offset-3">
+                    </div>
 
                     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                     <h2>Danh sách điểm</h2>
@@ -34,12 +56,13 @@
                             </table>
                         </div>
                     </div>
-                <!-- /.box-body -->
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
             </div>
-            <!-- /.box -->
+            <!-- /.col -->
         </div>
-        <!-- /.col -->
-    </div>
-    <!-- /.row -->
+        <!-- /.row -->
+        </div>
 </section>
 <!-- /.content -->

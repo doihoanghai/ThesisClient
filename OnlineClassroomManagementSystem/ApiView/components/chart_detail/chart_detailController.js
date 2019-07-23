@@ -40,20 +40,22 @@
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
                 ['Thứ tự', 'Điểm'],
-                ['1', 8],
-                ['2', 2],
-                ['3', 4],
-                ['4', 2],
-                ['5', 8],
-                ['6', 8],
-                ['7', 2],
-                ['8', 4],
-                ['9', 2],
+                ['Điểm 0', 8],
+                ['Điểm kém', 2],
+                ['Điểm yếu', 4],
+                ['Điểm TB', 2],
+                ['Điểm khá', 8],
+                ['Điểm giỏi', 8],
+                ['Điểm 10', 2],
             ]);
 
             // Optional; add a title and set the width and height of the chart
-            var options = { 'title': 'Điểm bài tập', 'width': 550, 'height': 400 };
-
+            var options = {
+                titleTextStyle: {
+                    fontName: 'Times New Roman', fontSize: 20, bold: true},
+                'title': 'Điểm bài tập', 'width': 650, 'height': 400
+            };
+                                    
             // Display the chart inside the <div> element with id="piechart"
             var chart = new google.visualization.PieChart(document.getElementById('piechart'));
             chart.draw(data, options);
